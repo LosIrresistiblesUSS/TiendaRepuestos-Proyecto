@@ -1,0 +1,150 @@
+body{
+    
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    border-style: none;
+}
+
+.ui-paginator .ui-paginator-page,
+.ui-paginator .ui-paginator-pages,
+.ui-paginator .ui-paginator-next,
+.ui-paginator .ui-paginator-last,
+.ui-paginator .ui-paginator-first,
+.ui-paginator .ui-paginator-prev,
+.ui-paginator .ui-paginator-current{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.ui-paginator-current{
+    display: block;
+    width: 100%;
+    color: black;
+    margin-top: 10px;
+}
+
+.ui-paginator{
+    padding: 8px 13px !important;
+    margin-bottom: 10px;
+}
+
+.ui-paginator-pages{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.ui-paginator-page{
+    padding: 6px 12px !important;
+    color: #337ab7;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.ui-paginator-prev{
+    padding: 6px 8px !important;
+    color: #337ab7;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px 0px 0px 4px !important;
+}
+
+.ui-paginator-next{
+    padding: 6px 8px !important;
+    color: #337ab7;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0px 4px 4px 0px !important;
+}
+
+.ui-icon-seek-prev{
+    display: box;
+    width: 19px;
+    height: 19px;
+    background-image: url(../img/icon/prev.png);
+    background-repeat: no-repeat;
+    background-size: 19px 19px;
+    
+}
+
+.ui-paginator-rpp-options, .ui-column-filter{
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.ui-state-hover{
+    background: #e0f7fa;
+}
+
+.ui-state-active{
+    background: #337ab7;
+    color: #fff;
+}
+
+.ui-state-disabled{
+    color: #777;
+    cursor: not-allowed !important;
+    background-color: #ddd;
+    
+}
+
+.ui-icon-seek-next{
+    display: box;
+    width: 19px;
+    height: 19px;
+    background-image: url(../img/icon/next.png);
+    background-repeat: no-repeat;
+    background-size: 19px 19px;
+    
+}
+
+table{
+    margin-bottom: 0px !important;
+}
+
+.panel-body {
+    padding: 0px;
+    margin-bottom: 40px;
+}
+.panel-primary{
+    margin: 0px;
+}
+
+thead{
+    background: #222 !important;
+    color: white;
+}
+
+.panel{
+    margin-bottom: 60px !important;
+}
+
+.ui-widget-content>td{
+    padding: 6px !important;
+}
+
+.botonSuperior{
+    padding: 4.5px 1px;
+}
+
+.botonnuevo{
+    padding: 7px 13px;
+}
+
+.ui-messages-info, .ui-message-info {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.ui-datatable-tablewrapper{
+    border: 1px solid #222 !important;
+}

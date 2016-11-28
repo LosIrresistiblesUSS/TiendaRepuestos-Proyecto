@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="Irresistibles"/>
+  <table-filter match-name="persona"/>
+  <table-filter match-name="proveedor"/>
+  <table-filter match-name="tiposervicio"/>
+  <table-filter match-name="servicio"/>
+  <table-filter match-name="tipodocumento"/>
+  <table-filter match-name="tipoempleado"/>
+  <table-filter match-name="detalleoperacion"/>
+  <table-filter match-name="producto"/>
+  <table-filter match-name="login"/>
+  <table-filter match-name="vehiculo"/>
+  <table-filter match-name="kardex"/>
+  <table-filter match-name="detallecompra"/>
+  <table-filter match-name="detallepermiso"/>
+  <table-filter match-name="permiso"/>
+  <table-filter match-name="repuesto"/>
+  <table-filter match-name="operacion"/>
+  <table-filter match-name="cliente"/>
+  <table-filter match-name="tipocliente"/>
+  <table-filter match-name="tipocomprobanteventa"/>
+  <table-filter match-name="empleado"/>
+  <table-filter match-name="comprobanteventa"/>
+  <table-filter match-name="comprobantecompra"/>
+  <table-filter match-name="detalleventa"/>
+</hibernate-reverse-engineering>

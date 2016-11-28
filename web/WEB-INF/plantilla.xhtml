@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <title>Venta de Repuestos</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="resources/css/general.css" />
+        <link rel="stylesheet" href="resources/css/estilos2.css" />
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <ui:insert name="top">
+                <header>
+                    <nav class="navbar navbar-inverse bg-info">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="#"><b>Venta de Repuestos</b></a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li id="nav-enlace-operaciones"><a role="button" data-toggle="collapse" href="#collapseOperaciones" aria-expanded="false" aria-controls="collapseOperaciones">Operaciones</a></li>
+                                    <li id="nav-enlace-mantenimientos"><a role="button" data-toggle="collapse" href="#collapseMantenimientos" aria-expanded="false" aria-controls="collapseMantenimientos">Mantenimientos</a></li>
+                                    <li id="nav-enlace-reportes"><a role="button" data-toggle="collapse" href="#collapseReportes" aria-expanded="false" aria-controls="collapseReportes">Reportes</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <img src="resources/img/usuarios/cantosmo.jpg" alt="" class="img-circle img-xs-sesion" />&nbsp;Usuario&nbsp;<span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu menu-usuario">
+                                            <div class="espacio-datos-usuario"></div>
+                                            <div class="datos-usuario">
+                                                <img class="img-lg-sesion" src="resources/img/usuarios/cantosmo.jpg" alt="" />
+                                                <div class="caption">
+                                                    <h5>Nombre del Usuario</h5>
+                                                    <h5><span class="label label-default">Cargo del Usuario</span></h5>
+                                                    <div role="separator" class="divider divider2"></div>
+                                                    <p><a href="#" class="btn btn-danger" onclick="" role="button">Cerrar Sesión</a></p>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div class="collapse mi-collapse" id="collapseOperaciones">
+                        <div class="container btn-group1">
+                            <h4 class="text-collapse">Operaciones</h4>
+                            <div class="btn-group btn-group-sm " role="group" aria-label="">
+                                <a href="#" class="btn btn-primary">Venta Repuestos</a>           
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="collapse mi-collapse" id="collapseMantenimientos">
+                        <div class="container btn-group1">
+                            <h4 class="text-collapse">Mantenimientos</h4>
+                            <div class="btn-group btn-group-sm " role="group" aria-label="">
+                                <a href="#" class="btn btn-primary">Empleado</a>
+                                <a href="#" class="btn btn-primary">Proveedor</a>
+                                <a href="#" class="btn btn-primary">Cliente</a>
+                                <a href="#" class="btn btn-primary">Repuesto</a>
+                                <a href="#" class="btn btn-primary">Tipo Empleado</a>
+                                <a href="TipoServicio.xhtml" class="btn btn-primary">Tipo Servicio</a>                
+                                <a href="TipoDocumento.xhtml" class="btn btn-primary">Tipo Documento</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse mi-collapse" id="collapseReportes">
+                        <div class="container btn-group1">
+                            <h4 class="text-collapse">Reportes</h4>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="">
+                                <button type="button" class="btn btn-primary">Tipo Servicio</button>
+                                <button type="button" class="btn btn-primary">Servicio</button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </ui:insert>
+        </div>
+
+        <!-- CONTENIDO A EDITAR -->
+        <div id="content" class="center_content">
+            <ui:insert name="content">Contenido por defecto</ui:insert>
+        </div>
+
+        <div id="bottom">
+            <ui:insert name="bottom">
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                Copyright &COPY; Los Irresistibles USS - 2016
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+
+                <script src="resources/js/menuDeslizable.js"></script>
+                <script src="resources/js/bootstrap.min.js"></script>
+            </ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

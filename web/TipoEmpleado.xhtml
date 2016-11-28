@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Tipo Servicio</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="resources/css/estilos.css" />
+    </h:head>
+    <h:body>
+        <ul id="slide-out" class="side-nav fixed">
+            <li><div class="userView">
+                <div class="background">
+                    <img src="resources/img/fondo/ciudad.jpg" />
+                </div>
+                <a href="#!user"><img class="circle" src="resources/img/usuarios/acotrinae.jpg" /></a>
+                <a href="#!name"><span class="white-text name">Erick Joel Acuña Cotrina</span></a>
+                <a href="#!email"><span class="white-text email">Vendedor</span></a>
+            </div></li>
+            <div class="items-menu">
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a class="collapsible-header waves-effect waves-red"><b>Mantenimientos<i class="material-icons">arrow_drop_down</i></b></a>
+                        <div class="collapsible-body">
+                          <ul>
+                             <li><a href="TipoServicio.xhtml">Tipo de Servicio</a></li>
+                            <li><a href="TipoEmpleado.xhtml">Tipo de Empleado</a></li>
+                            <li><a href="TipoCliente.xhtml">Tipo de Cliente</a></li>
+                            <li><a href="TipoDocumento.xhtml">Tipo de Documentos</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a class="collapsible-header waves-effect waves-red"><b>Operaciones<i class="material-icons">arrow_drop_down</i></b></a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li><a href="#!">Venta de Repuestos</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                </li>
+            </div>
+        </ul>
+        
+        <header>
+            <!--<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>-->
+            <nav class="top-nav">
+                <div class="container-titulo">
+                    <div class="nav-wrapper">
+                        <a class="page-title">Tipo de Empleado</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        
+        
+        <main>
+            <div class="container-titulo">
+                <!-- FORMULARIO PARA REGISTRO DE DATOS-->
+                <h:form id="formInsertar">
+                    <p:panelGrid columns="1">
+                        <p:outputLabel value="Descripcion: "/>
+                        <p:inputText value="#{tipoEmpleadoBean.tipoEmpleado.descripcion}" />
+
+                    </p:panelGrid>
+                    
+                    <!--<p:commandButton value="Nuevo" oncomplete="PF('dlgmodificar').show();" />-->
+                    <p:commandButton actionListener="#{tipoEmpleadoBean.insertar()}" value="Ingresar TipoEmpleado" update=":formMostrar"/>
+
+                </h:form>
+
+                <!-- LISTA DE PERSONAS - DATATABLE-->
+                <h:form id="formMostrar">
+                    <!-- Configuración de la Tabla-->
+                    <p:dataTable var="ts" value="#{tipoEmpleadoBean.tipoEmpleados}"
+                                 emptyMessage="No hay Tipos de Empleados disponibles"
+                                 paginator="true" rows="10" 
+                                 paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,20,50">
+
+                        <!-- Columnas-->
+                        <p:column headerText="Id TipoEmpleado">
+                            <h:outputText value="#{ts.idTipoEmpleado}"/>
+                        </p:column>
+
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{ts.descripcion}"/>
+                        </p:column>
+
+                        <p:column headerText="Accion">
+                            <!-- boton de acción Editar-->
+                            <p:commandButton value="Editar" 
+                                             onclick="PF('dlgmodificar').show();" 
+                                             update=":formModificar">
+                                <f:setPropertyActionListener target="#{tipoEmpleadoBean.tipoEmpleado}" value="#{ts}"/>
+                            </p:commandButton>      
+
+                        </p:column>
+
+                        <p:column headerText="Accion">
+                            <!-- boton de acción Eliminar-->
+                            <p:commandButton value="Eliminar" 
+                                             onclick="PF('dlgeliminar').show();" >
+                                <f:setPropertyActionListener target="#{tipoEmpleadoBean.tipoEmpleado}" value="#{ts}"/>
+                            </p:commandButton>       
+                        </p:column>               
+                    </p:dataTable> 
+                </h:form>
+
+                <!-- POPUP para modificar datos de un registro-->
+                <p:dialog id="dlg" 
+                          header="Modificar TipoEmpleado" 
+                          showEffect="explode" 
+                          hideEffect="bounce"
+                          widgetVar="dlgmodificar" 
+                          modal="true" 
+                          resizable="false" 
+                          minWidth="200">
+                    <h:form id="formModificar">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nombre del Tipo de Empleado"/>
+                            <p:inputText value="#{tipoEmpleadoBean.tipoEmpleado.descripcion}" />
+
+                        </p:panelGrid>
+
+                        <p:commandButton actionListener="#{tipoEmpleadoBean.modificar()}" 
+                                         value="Modificar TipoEmpleado" 
+                                         update=":formMostrar"
+                                         onclick="PF('dlgmodificar').hide();"/>
+                    </h:form>
+                </p:dialog>
+
+                <!-- POPUP para Eliminar un registro -->
+                <p:dialog id="dlg2" 
+                           header="Eliminar TipoEmpleado" 
+                           showEffect="explode"
+                           hideEffect="bounce"
+                           widgetVar="dlgeliminar" 
+                           modal="true" 
+                           resizable="false" 
+                           minWidth="200">
+                    <h:form id="formEliminar">
+                        <p:outputLabel value="¿Desea eliminar el Tipo de Empleado?" />                
+                        <p:commandButton actionListener="#{tipoEmpleadoBean.eliminar()}" 
+                                         value="Si" 
+                                         update=":formMostrar"
+                                         onclick="PF('dlgeliminar').hide();"/>
+                         <p:commandButton value="No" 
+                                          onclick="PF('dlg2').hide();"/>
+                    </h:form>
+                </p:dialog>
+
+            </div>
+        </main>
+        
+        
+        <!--Import jQuery before materialize.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <script>
+        $(".button-collapse").sideNav();
+        
+        </script>
+        
+    </h:body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" />
+        <link rel="stylesheet" href="resources/css/estilos.css" />
+    </h:head>
+    <div id="particles-js"></div>
+    <h:body>
+        <div class="valign-wrapper" id="login-page">
+            <div class="container">
+                <div class="center-align">
+                    <div class="row">
+                        <div class="col s12 m8 l6 offset-m2 offset-l3">
+                            <div class="card z-depth-5">
+                                <div class="card-content">
+                                    <h4>Irresistibles</h4>
+                                    <img class="responsive-img" style="max-width: 100px;" src="http://pcfixer.com.mx/contenedor/assets/img/logos/logo_login.png" />
+                                    <div class="left-align">
+                                        <h:form id="login-form">
+                                            <p:growl autoUpdate="true" />
+                                            <div class="row">
+                                                <div class="col s10 input-field offset-s1">
+                                                    <h:inputText id="usuario" required="true" requiredMessage="El usuario es requerido" />
+                                                    <h:outputLabel for="usuario" value="Usuario" />
+                                                </div>
+                                                <div class="col s10 input-field offset-s1">
+                                                    <h:inputText id="password" required="true" requiredMessage="El password es requerido" />
+                                                    <h:outputLabel for="password" value="Password" />
+                                                </div>
+                                                <div class="col s10 input-field offset-s1">
+                                                    <h:commandLink value="Login" styleClass="btn btn-large" />
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            $(document).on("ready", function(){
+                $('#login-page').css({'height': window.innerHeight + 'px'});
+            });
+        </script>
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <script src="resources/js/particles.min.js"></script>
+        <script src="resources/js/particulas.js"></script>
+    </h:body>
+</html>

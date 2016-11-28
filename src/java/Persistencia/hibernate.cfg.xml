@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Irresistibles?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password"/>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.show_sql">true</property>
+    <mapping class="Model.TipoCliente"/>
+    <mapping class="Model.TipoEmpleado"/>
+    <mapping class="Model.TipoComprobanteVenta"/>
+    <mapping class="Model.TipoServicio"/>
+    <mapping class="Model.TipoDocumento"/>
+    <mapping class="Model.Persona"/>
+    <mapping class="Model.Empleado"/>
+    <mapping class="Model.Cliente"/>
+    <mapping class="Model.Vehiculo"/>
+    <mapping class="Model.Operacion"/>
+    <mapping class="Model.ComprobanteVenta"/>
+    <mapping class="Model.Producto"/>
+    <mapping class="Model.Servicio"/>
+    <mapping class="Model.DetalleOperacion"/>
+    <mapping class="Model.DetalleVenta"/>
+    <mapping class="Model.Repuesto"/>
+    <mapping class="Model.Kardex"/>
+    <mapping class="Model.Login"/>
+    <mapping class="Model.Permiso"/>
+    <mapping class="Model.DetallePermiso"/>
+    <mapping class="Model.Proveedor"/>
+    <mapping class="Model.ComprobanteCompra"/>
+    <mapping class="Model.DetalleCompra"/>
+  </session-factory>
+</hibernate-configuration>

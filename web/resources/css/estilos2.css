@@ -1,0 +1,197 @@
+body{
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+}
+
+.navbar{
+    margin-bottom: 0;
+    border-radius: 0px;
+}
+
+.navbar-brand b{
+    color: #fff;
+}
+
+.porMayor{
+    background: #009933;
+    color: white;
+}
+
+.panel-productos-padre{
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.eliminar-producto{
+    color: #d42e2e;
+}
+
+.eliminar-producto:hover{
+    color: #b14646;
+}
+
+.panel-productos{
+    padding: 25px 20px 25px 20px;
+}
+
+.paginacionModal{
+    margin: -20px 15px -5px 15px;
+}
+
+.navbar-brand b:hover{
+    color: #FFECB3;
+}
+
+#numeroXpagina{
+    margin-left: 80px;
+}
+
+.cuadro-busqueda{
+    margin-right: -20px;
+}
+
+.jumbotron{
+    background: #337ab7;
+    color: #fff;
+    padding: 1px 0px 15px 0px;
+}
+
+.panel-heading-2{
+    padding: 7px;
+}
+
+.icono-text{
+    display: box;
+    padding: 3px;
+}
+
+.formulario-resultados{
+    margin-bottom: 0px;
+}
+
+.tabla-resultados{
+    margin-bottom: 7px;
+}
+
+.form-principal{
+    margin-top: 10px;
+}
+
+.datos-usuario{
+    text-align: center;
+}
+
+.panel-centrado{
+    padding: 30px;
+}
+
+.dropdown-menu{
+    background: #222;
+    color: #fff;
+}
+
+.img-lg-sesion{
+    width: 100px;
+    height: 100px;
+    margin: 0px 20px 0px 20px;
+    box-shadow: 0px 0px 20px #000;
+}
+
+.menu-usuario{
+    box-shadow: 0px 5px 20px #000;
+}
+
+.btn-group1{
+    padding: 0px 0px 13px 10px;
+}
+
+.mi-collapse{
+    background: #333;
+}
+
+.text-collapse{
+    color: #fff;
+}
+
+.img-xs-sesion{
+    width: 20px;
+    height: 20px;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #222;
+    color: #fff;
+    padding: 10px 0px;
+}
+
+main{
+    padding-bottom: 50px; 
+}
+
+.alert-mensajes{
+    margin-bottom: 10px;
+}
+
+.td-acciones-editar{
+    padding-right: 5px;
+}
+
+.td-acciones-eliminar{
+    margin-left: 5px;
+}
+
+.buscar{
+    display: inline-block;
+}
+
+.divider2{
+    margin-top: 23px !important;
+    margin-bottom: 15px !important;
+}
+
+.page-header{
+    margin-top: -40px;
+    margin-bottom: 30px;
+    padding: 1px;
+}
+
+.form-group{
+    margin-bottom: 15px !important;
+}
+
+.modal-header{
+    background: #337ab7;
+    color: #fff;
+}
+
+.espacio-datos-usuario{
+    margin-top: 8px;
+}
+
+.thead-listado{
+    background: #222;
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+    .espacio-buscar{
+        height: 7px;
+     }
+     
+    #numeroXpagina{
+        margin-left: 60px;
+    }
+}
+
+@media (min-width: 768px) {
+    .espacio-buscar{
+        display: none;
+    }
+}
