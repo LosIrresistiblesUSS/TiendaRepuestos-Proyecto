@@ -47,5 +47,12 @@ window.onload = function()
     $('#modalModificarTipoDocumento').on('shown.bs.modal', function () {
         $('.tipoDocumento-descripcion').focus();
     });
+    
+    $('#modalNuevoTipoEmpleado').on('shown.bs.modal', function () {
+        $('.tipoEmpleado-descripcion').focus();
+    });
+    $('#modalModificarTipoEmpleado').on('shown.bs.modal', function () {
+        $('.tipoEmpleado-descripcion').focus();
+    });
     hacerFoco();
 };

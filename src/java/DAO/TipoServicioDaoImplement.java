@@ -98,6 +98,7 @@ public class TipoServicioDaoImplement implements TipoServicioDao{
             session.beginTransaction();
             session.delete(tipoServicio);
             session.getTransaction().commit();
+            
         } catch (HibernateException e) {
             flag = true;
             System.out.println("Error en Método 'eliminarTipoServicio': "+ e.getMessage());
