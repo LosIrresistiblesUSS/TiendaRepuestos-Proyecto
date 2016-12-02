@@ -11,10 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+@NamedQueries({@NamedQuery(name="inicioSesion", query="from Login as l where l.usuario = :user and l.pass = :pass")})
 @Entity
 @Table(name="Login")
 public class Login implements Serializable {

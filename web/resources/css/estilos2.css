@@ -195,3 +195,19 @@ main{
         display: none;
     }
 }
+
+
+
+/*PRINCIPAL*/
+
+.contenedor-cuerpo-panel{
+    margin: 0px 20px 20px 20px !important;
+}
+
+.jumbotronPrincipal{
+    margin-bottom: 8px;
+}
+
+.mensajePrincipal{
+    padding-bottom: 5px;
+}

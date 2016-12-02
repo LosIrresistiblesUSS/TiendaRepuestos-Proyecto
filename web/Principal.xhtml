@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/plantilla.xhtml">
+
+            <ui:define name="content">
+                <section class="jumbotron jumbotronPrincipal">
+                    <div class="container">
+                        <h2><strong>Página Principal</strong></h2>
+                    </div>
+                </section>
+                <div class="container">
+                    <p:messages autoUpdate="true" showSummary="true" showDetail="true" styleClass="mensajePrincipal" />
+                    
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Datos del Empleado</h3>
+                        </div>
+                        <div class="panel-body contenedor-cuerpo-panel">
+                            <h3 class="text-center">#{loginBean.mostrarUsuarioLogeado().persona.nombres} #{loginBean.mostrarUsuarioLogeado().persona.empleado.apellidos}</h3>
+                            <img src="resources/img/usuarios/#{loginBean.mostrarUsuarioLogeado().imagen}" class="center-block img-responsive img-thumbnail" />
+                            <center><kbd>#{loginBean.mostrarUsuarioLogeado().usuario}</kbd></center>
+                            <center><span class="label label-danger">#{loginBean.mostrarUsuarioLogeado().persona.empleado.tipoEmpleado.descripcion}</span></center>
+                            
+                            <center><h5><span class="label label-primary">Correo:</span> #{loginBean.mostrarUsuarioLogeado().persona.email}</h5></center>
+                            <center><h5><span class="label label-primary">Dirección:</span> #{loginBean.mostrarUsuarioLogeado().persona.direccion}</h5></center>
+                            <center><h5><span class="label label-primary">Teléfono:</span> #{loginBean.mostrarUsuarioLogeado().persona.telefono}</h5></center>
+                            
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+            
+            <ui:define name="scripts">
+                <script src="resources/js/menuDeslizableSinFormularios.js"></script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

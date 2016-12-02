@@ -27,6 +27,10 @@ a.page-title{
     margin: 0 auto;
 }
 
+.ui-growl-item-container{
+    background: #fff;
+}
+
 @media only screen and (max-width : 992px) {
     header, main, footer {
       padding-left: 0;

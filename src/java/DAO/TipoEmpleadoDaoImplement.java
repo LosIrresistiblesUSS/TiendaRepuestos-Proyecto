@@ -1,7 +1,6 @@
 package DAO;
 
 import Model.TipoEmpleado;
-import Model.TipoServicio;
 import Persistencia.NewHibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
