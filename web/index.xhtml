@@ -7,7 +7,7 @@
     <h:head>
         <title>Inicio de Sesión</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>        
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" />
+        <link rel="stylesheet" href="resources/css/materialize.min.css" />
         <link rel="stylesheet" href="resources/css/estilosLogin.css" />
         <f:event type="preRenderView" listener="#{loginBean.verificarSesionAbierta()}" />
     </h:head>
@@ -21,7 +21,7 @@
                             <div class="card z-depth-5">
                                 <div class="card-content">
                                     <h4>Irresistibles</h4>
-                                    <img class="responsive-img" style="max-width: 100px;" src="http://pcfixer.com.mx/contenedor/assets/img/logos/logo_login.png" />
+                                    <img class="responsive-img" style="max-width: 100px;" src="resources/img/icon/logo_login.png" />
                                     <div class="left-align">
                                         <h:form id="login-form">
                                             <div class="row">
@@ -54,7 +54,7 @@
                 $('.usuario').focus();
             });
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <script src="resources/js/materialize.min.js"></script>
         <script src="resources/js/particles.min.js"></script>
         <script src="resources/js/particulas.js"></script>
     </h:body>
