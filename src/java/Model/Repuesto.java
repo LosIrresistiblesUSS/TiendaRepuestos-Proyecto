@@ -12,7 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
+@NamedQueries({@NamedQuery(name="busquedaPorDescripcionRepuesto", query="from Repuesto as r where r.producto.descripcion like :descrip order by r.idProducto desc")})
 @Entity
 @Table(name="Repuesto")
 public class Repuesto implements Serializable {
@@ -20,6 +23,9 @@ public class Repuesto implements Serializable {
     @Id
     @Column(name="idProducto")
     private Integer idProducto;
+    
+    @Column(name="imagen")
+    private String imagen;
     
     //-----One to One-----//
     @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
@@ -39,8 +45,9 @@ public class Repuesto implements Serializable {
     public Repuesto() {
     }
 
-    public Repuesto(Integer idProducto, Producto producto) {
+    public Repuesto(Integer idProducto, String imagen, Producto producto) {
         this.idProducto = idProducto;
+        this.imagen = imagen;
         this.producto = producto;
     }
 
@@ -50,6 +57,14 @@ public class Repuesto implements Serializable {
 
     public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public Producto getProducto() {

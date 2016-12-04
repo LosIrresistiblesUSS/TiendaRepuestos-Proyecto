@@ -148,3 +148,93 @@ thead{
 .ui-datatable-tablewrapper{
     border: 1px solid #222 !important;
 }
+
+.ui-fileupload-progress{
+    display: none !important;
+}
+
+.ui-fileupload{
+    border: 2px #337ab7 solid;
+}
+
+.ui-fileupload-buttonbar{
+    background: #337ab7;
+}
+
+.ui-fileupload-choose,
+.ui-fileupload-upload,
+.ui-fileupload-cancel{
+    color: #333;
+    background-color: #fff;
+    border: #ccc 1px solid;
+}
+.ui-fileupload-choose:hover,
+.ui-fileupload-upload:hover,
+.ui-fileupload-cancel:hover{
+    background: #ddd;
+    border-color: #333;
+}
+
+.ui-fileupload-choose:active{
+    background: #e0f7fa;
+}
+
+.ui-fileupload-upload:disabled,
+.ui-fileupload-cancel:disabled{
+    background: #ddd;
+    color: #777;
+}
+
+.ui-button-icon-only{
+    border: #333 1px solid;
+}
+
+.ui-icon-plusthick{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/elegir.png);
+    background-size: 16px 16px;
+}
+
+.ui-icon-arrowreturnthick-1-n{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/subir.png);
+    background-size: 16px 16px;
+}
+
+.ui-icon-cancel{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/cancelar.png);
+    background-size: 16px 16px;
+}
+
+.ui-icon-close{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/eliminar.png);
+    background-size: 16px 16px;
+}
+
+.imgEditar .ui-button-text{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/imgEditar.png);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    margin: 4px -4px 4px 4px;
+}
+
+.imgEliminar .ui-button-text{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/imgEliminar.png);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    margin: 4px -4px 4px 4px;
+}
+
+.alineacionVertical{
+    vertical-align:middle !important;
+}

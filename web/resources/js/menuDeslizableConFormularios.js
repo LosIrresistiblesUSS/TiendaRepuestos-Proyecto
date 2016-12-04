@@ -54,5 +54,12 @@ window.onload = function()
     $('#modalModificarTipoEmpleado').on('shown.bs.modal', function () {
         $('.tipoEmpleado-descripcion').focus();
     });
+    
+    $('#modalNuevoRepuesto').on('shown.bs.modal', function () {
+        $('.repuesto-descripcion').focus();
+    });
+    $('#modalModificarRepuesto').on('shown.bs.modal', function () {
+        $('.repuesto-descripcion').focus();
+    });
     hacerFoco();
 };

@@ -12,7 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.NamedQuery;
 
+@NamedQuery(name="ultimoIdProducto", query="from Producto as p order by p.idProducto desc")
 @Entity
 @Table(name="Producto")
 public class Producto implements Serializable {

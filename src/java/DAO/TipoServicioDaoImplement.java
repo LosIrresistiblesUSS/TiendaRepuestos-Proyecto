@@ -23,7 +23,7 @@ public class TipoServicioDaoImplement implements TipoServicioDao{
             System.out.println("Error en Método 'mostrarTipoServicios': "+ e.getMessage());
         }finally{
             if(session!=null){
-            session.close();
+                session.close();
             }
         }
         return lista;  
