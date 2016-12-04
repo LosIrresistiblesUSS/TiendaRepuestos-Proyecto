@@ -10,9 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+@NamedQueries({@NamedQuery(name="busquedaPorDescripcionTipoCliente", query="from TipoCliente as cl where cl.descripcion like :descrip order by cl.idTipoCliente desc")})
 @Entity
 @Table(name="TipoCliente")
 public class TipoCliente implements Serializable {

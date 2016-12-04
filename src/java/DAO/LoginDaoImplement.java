@@ -25,10 +25,9 @@ public class LoginDaoImplement implements LoginDao{
             System.out.println("Error en Método 'iniciarSesion': "+ e.getMessage());
         } finally {
             if(session!=null){
-            session.close();
+                session.close();
             }
         }
         return loginIniciado;
     }
-    
 }

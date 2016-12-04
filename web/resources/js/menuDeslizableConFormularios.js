@@ -61,5 +61,12 @@ window.onload = function()
     $('#modalModificarRepuesto').on('shown.bs.modal', function () {
         $('.repuesto-descripcion').focus();
     });
+    
+    $('#modalNuevoTipoCliente').on('shown.bs.modal', function () {
+        $('.tipoCliente-descripcion').focus();
+    });
+    $('#modalModificarTipoCliente').on('shown.bs.modal', function () {
+        $('.tipoCliente-descripcion').focus();
+    });
     hacerFoco();
 };

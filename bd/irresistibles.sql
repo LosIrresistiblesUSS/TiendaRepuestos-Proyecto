@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.4.14
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2016 a las 18:54:14
--- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.6.23
+-- Tiempo de generación: 04-12-2016 a las 22:20:15
+-- Versión del servidor: 5.6.26
+-- Versión de PHP: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `cliente`
 --
 
-CREATE TABLE `cliente` (
+CREATE TABLE IF NOT EXISTS `cliente` (
   `idPersona` int(11) NOT NULL,
   `apellidos` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `razonSocial` varchar(150) COLLATE utf8_spanish_ci NOT NULL,
@@ -61,11 +61,11 @@ INSERT INTO `cliente` (`idPersona`, `apellidos`, `razonSocial`, `idTipoCliente`)
 -- Estructura de tabla para la tabla `comprobantecompra`
 --
 
-CREATE TABLE `comprobantecompra` (
+CREATE TABLE IF NOT EXISTS `comprobantecompra` (
   `idComprobanteCompra` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `idPersonaProveedor` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `comprobantecompra`
@@ -91,7 +91,7 @@ INSERT INTO `comprobantecompra` (`idComprobanteCompra`, `fecha`, `idPersonaProve
 -- Estructura de tabla para la tabla `comprobanteventa`
 --
 
-CREATE TABLE `comprobanteventa` (
+CREATE TABLE IF NOT EXISTS `comprobanteventa` (
   `idComprobanteVenta` int(11) NOT NULL,
   `numero` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -99,7 +99,7 @@ CREATE TABLE `comprobanteventa` (
   `importe` decimal(7,2) DEFAULT NULL,
   `estado` bit(1) NOT NULL DEFAULT b'1',
   `idTipoComprobanteVenta` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `comprobanteventa`
@@ -139,13 +139,13 @@ INSERT INTO `comprobanteventa` (`idComprobanteVenta`, `numero`, `fecha`, `descri
 -- Estructura de tabla para la tabla `detallecompra`
 --
 
-CREATE TABLE `detallecompra` (
+CREATE TABLE IF NOT EXISTS `detallecompra` (
   `idDetalleCompra` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `montoTotal` decimal(8,2) NOT NULL,
   `idComprobanteCompra` int(11) NOT NULL,
   `idProductoRepuesto` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `detallecompra`
@@ -171,14 +171,14 @@ INSERT INTO `detallecompra` (`idDetalleCompra`, `cantidad`, `montoTotal`, `idCom
 -- Estructura de tabla para la tabla `detalleoperacion`
 --
 
-CREATE TABLE `detalleoperacion` (
+CREATE TABLE IF NOT EXISTS `detalleoperacion` (
   `idDetalleOperacion` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio` decimal(6,2) NOT NULL,
   `subTotal` decimal(7,2) NOT NULL,
   `idOperacion` int(11) NOT NULL,
   `idProducto` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `detalleoperacion`
@@ -220,13 +220,13 @@ INSERT INTO `detalleoperacion` (`idDetalleOperacion`, `cantidad`, `precio`, `sub
 -- Estructura de tabla para la tabla `detallepermiso`
 --
 
-CREATE TABLE `detallepermiso` (
+CREATE TABLE IF NOT EXISTS `detallepermiso` (
   `idDetallePermiso` int(11) NOT NULL,
   `idLogin` int(11) NOT NULL,
   `idPermiso` int(11) NOT NULL,
   `accion` char(1) COLLATE utf8_spanish_ci NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `detallepermiso`
@@ -336,11 +336,11 @@ INSERT INTO `detallepermiso` (`idDetallePermiso`, `idLogin`, `idPermiso`, `accio
 -- Estructura de tabla para la tabla `detalleventa`
 --
 
-CREATE TABLE `detalleventa` (
+CREATE TABLE IF NOT EXISTS `detalleventa` (
   `idDetalleVenta` int(11) NOT NULL,
   `idComprobanteVenta` int(11) NOT NULL,
   `idDetalleOperacion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `detalleventa`
@@ -381,7 +381,7 @@ INSERT INTO `detalleventa` (`idDetalleVenta`, `idComprobanteVenta`, `idDetalleOp
 -- Estructura de tabla para la tabla `empleado`
 --
 
-CREATE TABLE `empleado` (
+CREATE TABLE IF NOT EXISTS `empleado` (
   `idPersona` int(11) NOT NULL,
   `apellidos` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `idTipoEmpleado` int(11) NOT NULL
@@ -397,7 +397,8 @@ INSERT INTO `empleado` (`idPersona`, `apellidos`, `idTipoEmpleado`) VALUES
 (23, 'Santisteban Ayasta', 3),
 (28, 'Zeña Zeña', 2),
 (32, 'Chinguel Rodriguez', 4),
-(36, 'Acuña Cotrina', 1);
+(36, 'Acuña Cotrina', 1),
+(38, 'Mejia Cabrera', 6);
 
 -- --------------------------------------------------------
 
@@ -405,7 +406,7 @@ INSERT INTO `empleado` (`idPersona`, `apellidos`, `idTipoEmpleado`) VALUES
 -- Estructura de tabla para la tabla `kardex`
 --
 
-CREATE TABLE `kardex` (
+CREATE TABLE IF NOT EXISTS `kardex` (
   `idKardex` int(11) NOT NULL,
   `detalle` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
   `cantidadIngreso` int(11) DEFAULT NULL,
@@ -413,7 +414,7 @@ CREATE TABLE `kardex` (
   `cantidadSalida` int(11) DEFAULT NULL,
   `precioSalida` decimal(6,2) DEFAULT NULL,
   `idProductoRepuesto` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `kardex`
@@ -477,13 +478,13 @@ INSERT INTO `kardex` (`idKardex`, `detalle`, `cantidadIngreso`, `precioIngreso`,
 -- Estructura de tabla para la tabla `login`
 --
 
-CREATE TABLE `login` (
+CREATE TABLE IF NOT EXISTS `login` (
   `idLogin` int(11) NOT NULL,
   `idPersona` int(11) NOT NULL,
   `usuario` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `pass` varchar(32) COLLATE utf8_spanish_ci NOT NULL,
   `imagen` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `login`
@@ -495,7 +496,8 @@ INSERT INTO `login` (`idLogin`, `idPersona`, `usuario`, `pass`, `imagen`) VALUES
 (3, 23, 'sayastaleona', '717612314c973592d58e447cdd3e8bc2', 'sayastaleona.jpg'),
 (4, 28, 'zzenaedins', 'c33ebbf3bc4d4008822f7267d07732a6', 'zzenaedins.jpg'),
 (5, 32, 'crodriguezmilag', 'e63bd05bb93ac5000814ce53231c619e', 'crodriguezmilag.jpg'),
-(6, 36, 'acotrinae', '42ffc07c053b92629cf3db3d203498d9', 'acotrinae.jpg');
+(6, 36, 'acotrinae', '42ffc07c053b92629cf3db3d203498d9', 'acotrinae.jpg'),
+(7, 38, 'hmejiac', '1ff9bafb2e28464215d132ffb8a0bd47', 'ingmejia.jpg');
 
 -- --------------------------------------------------------
 
@@ -503,13 +505,13 @@ INSERT INTO `login` (`idLogin`, `idPersona`, `usuario`, `pass`, `imagen`) VALUES
 -- Estructura de tabla para la tabla `operacion`
 --
 
-CREATE TABLE `operacion` (
+CREATE TABLE IF NOT EXISTS `operacion` (
   `idOperacion` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `idPersonaCliente` int(11) NOT NULL,
   `idPersonaEmpleado` int(11) NOT NULL,
   `idVehiculo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `operacion`
@@ -546,10 +548,10 @@ INSERT INTO `operacion` (`idOperacion`, `estado`, `idPersonaCliente`, `idPersona
 -- Estructura de tabla para la tabla `permiso`
 --
 
-CREATE TABLE `permiso` (
+CREATE TABLE IF NOT EXISTS `permiso` (
   `idPermiso` int(11) NOT NULL,
   `descripcion` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `permiso`
@@ -567,7 +569,7 @@ INSERT INTO `permiso` (`idPermiso`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `persona`
 --
 
-CREATE TABLE `persona` (
+CREATE TABLE IF NOT EXISTS `persona` (
   `idPersona` int(11) NOT NULL,
   `numeroDocumento` varchar(13) COLLATE utf8_spanish_ci NOT NULL,
   `nombres` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -618,7 +620,8 @@ INSERT INTO `persona` (`idPersona`, `numeroDocumento`, `nombres`, `direccion`, `
 (34, '49982159', 'Jacquelin Liset', 'Av. America Sur #852', '252865', 'ncolmenaresj@crece.uss.edu.pe', 1),
 (35, '49826500', 'Nolberto Romario', 'Av. Simón #920', '289366', 'nfernandeznolbe@crece.uss.edu.pe', 1),
 (36, '48221945', 'Erick Joel', 'Av.Jhon Kennedy #1792', '966685004', 'acotrinae@crece.uss.edu.pe', 1),
-(37, '18523075819', 'Wilfredo Cristobal', 'Diego Pele #357', '286781', 'ochavezwilfredo@crece.uss.edu.pe', 2);
+(37, '18523075819', 'Wilfredo Cristobal', 'Diego Pele #357', '286781', 'ochavezwilfredo@crece.uss.edu.pe', 2),
+(38, '41639565', 'Heber Ivan', 'CAL.SAN SALVADOR NRO. 1197 P.J. LUJAN (SEGUNDO PISO) ', '978843610', 'hmejiac@crece.uss.edu.pe', 1);
 
 -- --------------------------------------------------------
 
@@ -626,7 +629,7 @@ INSERT INTO `persona` (`idPersona`, `numeroDocumento`, `nombres`, `direccion`, `
 -- Estructura de tabla para la tabla `producto`
 --
 
-CREATE TABLE `producto` (
+CREATE TABLE IF NOT EXISTS `producto` (
   `idProducto` int(11) NOT NULL,
   `descripcion` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL,
   `stock` int(11) DEFAULT NULL,
@@ -786,7 +789,7 @@ INSERT INTO `producto` (`idProducto`, `descripcion`, `stock`, `precio`, `precioP
 -- Estructura de tabla para la tabla `proveedor`
 --
 
-CREATE TABLE `proveedor` (
+CREATE TABLE IF NOT EXISTS `proveedor` (
   `idPersona` int(11) NOT NULL,
   `razonComercial` varchar(150) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -818,7 +821,7 @@ INSERT INTO `proveedor` (`idPersona`, `razonComercial`) VALUES
 -- Estructura de tabla para la tabla `repuesto`
 --
 
-CREATE TABLE `repuesto` (
+CREATE TABLE IF NOT EXISTS `repuesto` (
   `idProducto` int(11) NOT NULL,
   `imagen` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -935,7 +938,7 @@ INSERT INTO `repuesto` (`idProducto`, `imagen`) VALUES
 -- Estructura de tabla para la tabla `servicio`
 --
 
-CREATE TABLE `servicio` (
+CREATE TABLE IF NOT EXISTS `servicio` (
   `idProducto` int(11) NOT NULL,
   `idTipoServicio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -992,10 +995,10 @@ INSERT INTO `servicio` (`idProducto`, `idTipoServicio`) VALUES
 -- Estructura de tabla para la tabla `tipocliente`
 --
 
-CREATE TABLE `tipocliente` (
+CREATE TABLE IF NOT EXISTS `tipocliente` (
   `idTipoCliente` int(11) NOT NULL,
   `descripcion` varchar(30) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tipocliente`
@@ -1011,10 +1014,10 @@ INSERT INTO `tipocliente` (`idTipoCliente`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `tipocomprobanteventa`
 --
 
-CREATE TABLE `tipocomprobanteventa` (
+CREATE TABLE IF NOT EXISTS `tipocomprobanteventa` (
   `idTipoComprobanteVenta` int(11) NOT NULL,
   `descripcion` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tipocomprobanteventa`
@@ -1030,10 +1033,10 @@ INSERT INTO `tipocomprobanteventa` (`idTipoComprobanteVenta`, `descripcion`) VAL
 -- Estructura de tabla para la tabla `tipodocumento`
 --
 
-CREATE TABLE `tipodocumento` (
+CREATE TABLE IF NOT EXISTS `tipodocumento` (
   `idTipoDocumento` int(11) NOT NULL,
   `descripcion` varchar(15) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tipodocumento`
@@ -1050,10 +1053,10 @@ INSERT INTO `tipodocumento` (`idTipoDocumento`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `tipoempleado`
 --
 
-CREATE TABLE `tipoempleado` (
+CREATE TABLE IF NOT EXISTS `tipoempleado` (
   `idTipoEmpleado` int(11) NOT NULL,
   `descripcion` varchar(25) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tipoempleado`
@@ -1064,7 +1067,8 @@ INSERT INTO `tipoempleado` (`idTipoEmpleado`, `descripcion`) VALUES
 (2, 'Mecanico'),
 (3, 'Jefe de Almacen'),
 (4, 'Administrador'),
-(5, 'Gerente Administrativo');
+(5, 'Gerente Administrativo'),
+(6, 'Gerente General');
 
 -- --------------------------------------------------------
 
@@ -1072,10 +1076,10 @@ INSERT INTO `tipoempleado` (`idTipoEmpleado`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `tiposervicio`
 --
 
-CREATE TABLE `tiposervicio` (
+CREATE TABLE IF NOT EXISTS `tiposervicio` (
   `idTipoServicio` int(11) NOT NULL,
   `descripcion` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `tiposervicio`
@@ -1096,14 +1100,14 @@ INSERT INTO `tiposervicio` (`idTipoServicio`, `descripcion`) VALUES
 -- Estructura de tabla para la tabla `vehiculo`
 --
 
-CREATE TABLE `vehiculo` (
+CREATE TABLE IF NOT EXISTS `vehiculo` (
   `idVehiculo` int(11) NOT NULL,
   `placa` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `marca` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
   `modelo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `observaciones` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
   `idPersonaCliente` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `vehiculo`
@@ -1350,82 +1354,82 @@ ALTER TABLE `vehiculo`
 -- AUTO_INCREMENT de la tabla `comprobantecompra`
 --
 ALTER TABLE `comprobantecompra`
-  MODIFY `idComprobanteCompra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idComprobanteCompra` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `comprobanteventa`
 --
 ALTER TABLE `comprobanteventa`
-  MODIFY `idComprobanteVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `idComprobanteVenta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT de la tabla `detallecompra`
 --
 ALTER TABLE `detallecompra`
-  MODIFY `idDetalleCompra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idDetalleCompra` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `detalleoperacion`
 --
 ALTER TABLE `detalleoperacion`
-  MODIFY `idDetalleOperacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `idDetalleOperacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT de la tabla `detallepermiso`
 --
 ALTER TABLE `detallepermiso`
-  MODIFY `idDetallePermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `idDetallePermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=97;
 --
 -- AUTO_INCREMENT de la tabla `detalleventa`
 --
 ALTER TABLE `detalleventa`
-  MODIFY `idDetalleVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idDetalleVenta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT de la tabla `kardex`
 --
 ALTER TABLE `kardex`
-  MODIFY `idKardex` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `idKardex` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
 --
 -- AUTO_INCREMENT de la tabla `login`
 --
 ALTER TABLE `login`
-  MODIFY `idLogin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idLogin` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `operacion`
 --
 ALTER TABLE `operacion`
-  MODIFY `idOperacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idOperacion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idPermiso` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `tipocliente`
 --
 ALTER TABLE `tipocliente`
-  MODIFY `idTipoCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idTipoCliente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `tipocomprobanteventa`
 --
 ALTER TABLE `tipocomprobanteventa`
-  MODIFY `idTipoComprobanteVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idTipoComprobanteVenta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `tipodocumento`
 --
 ALTER TABLE `tipodocumento`
-  MODIFY `idTipoDocumento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idTipoDocumento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `tipoempleado`
 --
 ALTER TABLE `tipoempleado`
-  MODIFY `idTipoEmpleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idTipoEmpleado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tiposervicio`
 --
 ALTER TABLE `tiposervicio`
-  MODIFY `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idTipoServicio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `vehiculo`
 --
 ALTER TABLE `vehiculo`
-  MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `idVehiculo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=70;
 --
 -- Restricciones para tablas volcadas
 --

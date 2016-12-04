@@ -10,19 +10,17 @@ import org.hibernate.Session;
 public class TipoClienteDaoImplement implements TipoClienteDao{
 
     @Override
-    public List<TipoCliente> mostrarTipoClientes() {
+    public List<TipoCliente> mostrarTipoClientes(String busqueda) {
         Session session=null;
         List<TipoCliente> lista=null;
         
         try {
             session= NewHibernateUtil.getSessionFactory().openSession();
-            Query query=session.createQuery("from TipoCliente");
+            Query query=session.getNamedQuery("busquedaPorDescripcionTipoCliente").setParameter("descrip", "%"+busqueda+"%");
             lista=(List<TipoCliente>) query.list();
-            
-            System.out.println("HOLAAAAAAAAA: "+lista.get(0).getDescripcion());
-            
+               
         }catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error en Método 'mostrarTipoClientes': "+ e.getMessage());
         }finally{
             if(session!=null){
             session.close();
@@ -32,23 +30,42 @@ public class TipoClienteDaoImplement implements TipoClienteDao{
     }
 
     @Override
-    public void insertarTipoCliente(TipoCliente tipoCliente) {
+    public int insertarTipoCliente(TipoCliente tipoCliente) {
         Session session=null;
+        List<TipoCliente> lista2;
+        int flag = 0;
       
         try {
             session= NewHibernateUtil.getSessionFactory().openSession();
+            lista2 = mostrarTipoClientes("");
+            
+            if (tipoCliente.getDescripcion().equals("")) {
+                flag = 2;
+            } else {
+                for(TipoCliente cl : lista2) {
+                    if (tipoCliente.getDescripcion().equals(cl.getDescripcion())) {
+                        flag = 1;
+                    }
+                }
+            }
             session.beginTransaction();
             session.save(tipoCliente);
-            session.getTransaction().commit();
+            
+               if (flag == 0) {
+                session.getTransaction().commit();
+            }else {
+                session.getTransaction().rollback();
+            }
             
         }catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error en Método 'insertarTipoCliente':" + e.getMessage());
             session.getTransaction().rollback();
         }finally{
             if(session!=null){
                 session.close();
             }
         }
+        return flag;
     }
 
     @Override
@@ -62,7 +79,7 @@ public class TipoClienteDaoImplement implements TipoClienteDao{
             session.getTransaction().commit();
             
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error en Método 'modificarTipoCliente': "+ e.getMessage());
             session.getTransaction().rollback();
         }finally{
             if(session!=null){
@@ -73,8 +90,9 @@ public class TipoClienteDaoImplement implements TipoClienteDao{
    
 
     @Override
-    public void eliminarTipoCliente(TipoCliente tipoCliente) {
+    public boolean eliminarTipoCliente(TipoCliente tipoCliente) {
         Session session=null;
+        boolean flag = false;
       
         try {
             session= NewHibernateUtil.getSessionFactory().openSession();
@@ -83,12 +101,14 @@ public class TipoClienteDaoImplement implements TipoClienteDao{
             session.getTransaction().commit();
             
         } catch (HibernateException e) {
-            System.out.println(e.getMessage());
+            flag = true;
+            System.out.println("Error en Método 'eliminarTipoCliente': "+e.getMessage());
             session.getTransaction().rollback();
         }finally{
             if(session!=null){
                 session.close();
             }
         }
+        return flag;
     } 
 }
