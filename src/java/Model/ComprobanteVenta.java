@@ -104,7 +104,7 @@ public class ComprobanteVenta implements Serializable {
         this.importe = importe;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

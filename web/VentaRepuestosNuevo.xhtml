@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+        
+    <body>
+
+        <ui:composition template="./WEB-INF/plantilla.xhtml">
+            <ui:define name="content">
+                
+                <section class="jumbotron">
+                    <div class="container">
+                        <h2><strong>Venta de Repuestos</strong></h2>
+                    </div>
+                </section>
+                <div class="page-header">
+                <div class="container">
+                    <h2>Nueva <small>Venta de Repuestos</small></h2>
+                </div>
+            </div>
+                
+            <section class="container">
+                <div class="panel panel-primary">
+                    <div class="panel-heading panel-heading-2"></div>
+                    <div class="panel-body">
+                        <form name="frmMnt" id="frmMnt" method="post" class="form-horizontal form-principal">
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="txtCliente">Cliente:</label>
+                                <div class="col-lg-3">
+                                    <div class="input-group">
+                                        <p:inputText value="#{tipoClienteBean.tipoCliente.descripcion}" id="descripcion" class="form-control" placeholder="Busca Cliente"/>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="button" href="#modalAgregarCliente" data-toggle="modal" id="buscarCliente"><span class="glyphicon glyphicon-search icono-text"></span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="selectIdTipoComprobanteVenta">Tipo de Comprobante:</label>
+                                <div class="col-md-3">
+                                    <select class="form-control" id="selectIdTipoComprobanteVenta">
+                                        
+                                        <option value="">Holaaaa</option>
+                                        
+                                    </select>
+                                </div>
+                                <label class="control-label col-md-2" for="txtNumero">Numero:</label>
+                                <div class="col-md-3">
+                                    <input class="form-control txtNumero" type="text" id="txtNumeroBoleta" value="" />
+                                    <input class="form-control" type="hidden" id="txtNumeroFactura" value="" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="txtFecha">Fecha</label>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="date" id="txtFecha" min="2016-01-01" max="2030-12-31" value=""/>
+                                </div>
+                                <label class="control-label col-md-2" for="txtDescripcion">Descripción:</label>
+                                <div class="col-md-3">
+                                    <input class="form-control" type="text" id="txtDescripcion" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+                
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

@@ -235,6 +235,24 @@ thead{
     margin: 4px -4px 4px 4px;
 }
 
+.imgReporte .ui-button-text{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/imgReporte.png);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    margin: 4px -4px 4px 4px;
+}
+
+.imgAnular .ui-button-text{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/imgAnular.png);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    margin: 4px -4px 4px 4px;
+}
+
 .alineacionVertical{
     vertical-align:middle !important;
 }

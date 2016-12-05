@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <body>
+
+        <ui:composition template="./WEB-INF/plantilla.xhtml">
+            <ui:define name="content">
+                
+                <section class="jumbotron">
+                    <div class="container">
+                        <h2><strong>Venta de Repuestos</strong></h2>
+                    </div>
+                </section>
+                
+                <div class="container">
+                    <h:form id="formInsertar">
+                        <div class="form-group row">
+                            <div class="cuadro-busqueda col-md-3 col-sm-4 col-xs-12">
+                                <p:inputText value="#{detalleVentaBean.busqueda}" placeholder="Busqueda por Nombres" class="txtBusqueda form-control">
+                                    <p:ajax event="keyup" update=":formMostrar" listener="#{detalleVentaBean.listar()}" />
+                                </p:inputText>
+                            </div>
+                            <div class="col-md-9 col-sm-8 col-xs-12">
+                                <div class="espacio-buscar"></div>
+                                <div class="row col-md-12 col-sm-12 col-xs-12">
+                                    <p:commandButton styleClass="btn btn-primary btn-sm botonSuperior"
+                                        value="Buscar"
+                                        actionListener="#{detalleVentaBean.listar()}"
+                                        update=":formMostrar">
+                                    </p:commandButton>                                    
+                                    <a href="VentaRepuestosNuevo.xhtml" class="btn btn-primary btn-sm botonnuevo">Nuevo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <h:form>
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    </h:form>
+
+                    <h:form id="formMostrar">
+                        <div class="panel-body">
+                            <p:dataTable var="dv" value="#{detalleVentaBean.detalleVentas}" tableStyleClass="table table-bordered" 
+                                         emptyMessage="No hay Detalle Ventas disponibles" 
+                                         paginator="true" rows="10" 
+                                         paginatorPosition="bottom" 
+                                         paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown} {CurrentPageReport}" 
+                                         currentPageReportTemplate="(Registros {startRecord} - {endRecord} de {totalRecords}, Pagina: {currentPage} de {totalPages})" 
+                                         rowsPerPageTemplate="5,10,20,50">
+                                <!-- Columnas-->
+                                <p:column headerText="Id">
+                                    <center>
+                                        <h:outputText value="#{dv.comprobanteVenta.idComprobanteVenta}"/>
+                                    </center>
+                                </p:column>
+
+                                <p:column headerText="Tipo" >
+                                    <h:outputText value="#{dv.comprobanteVenta.tipoComprobanteVenta.descripcion}"/>
+                                </p:column>
+                                
+                                <p:column headerText="Nro" >
+                                    <h:outputText value="#{dv.comprobanteVenta.numero}"/>
+                                </p:column>
+
+                                <p:column headerText="Nombres" >
+                                    <h:outputText value="#{dv.detalleOperacion.operacion.personaCliente.nombres}"/>
+                                </p:column>
+                                
+                                <p:column headerText="Apellidos o Razón Social" >
+                                    <h:outputText value="#{dv.detalleOperacion.operacion.personaCliente.cliente.apellidos} #{dv.detalleOperacion.operacion.personaCliente.cliente.razonSocial}"/>
+                                </p:column>
+                                
+                                <p:column headerText="Fecha" >
+                                    <h:outputText value="#{dv.comprobanteVenta.fecha}"/>
+                                </p:column>
+                                
+                                <p:column headerText="Estado" >
+                                    
+                                    <ui:fragment rendered="#{dv.comprobanteVenta.estado==true}"><center><span class="label label-success">Activo</span></center></ui:fragment>
+                                    <ui:fragment rendered="#{dv.comprobanteVenta.estado==false}"><center><span class="label label-warning">Anulado</span></center></ui:fragment>
+                                </p:column>
+                                
+                                <p:column headerText="Importe" >
+                                    <h:outputText value="#{dv.comprobanteVenta.importe}"/>
+                                </p:column>
+                                
+                                <p:column headerText="Accion">
+                                    <center>
+                                        <!-- boton de acción Reporte-->
+                                        <p:commandButton styleClass="btn btn-primary btn-xs imgReporte"
+                                            value=""
+                                            oncomplete=""
+                                            update="" >
+                                        </p:commandButton>
+
+                                        <!-- boton de acción Anular-->
+                                        <p:commandButton styleClass="btn btn-danger btn-xs imgAnular"
+                                            value=""
+                                            oncomplete="$('#modalCambiarEstado').modal('show');" >
+                                            <f:setPropertyActionListener target="#{detalleVentaBean.detalleVenta}" value="#{dv}"/>
+                                        </p:commandButton>  
+                                    </center>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </h:form>
+                </div>
+                
+                <!-- Modal para Eliminar un Registro -->
+                <div class="modal fade" id="modalCambiarEstado" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title text-center" id="myModalLabel">Cambiar Estado de Comprobante de Venta</h3>
+                            </div>
+                            <h:form id="formEliminar" styleClass="form-horizontal">
+                                <div class="modal-body">
+                                    <center><p><strong>Está seguro de Cambiar el estado del Comprobante de Venta:</strong></p></center>
+                                    <center><p><strong>#{detalleVentaBean.detalleVenta.detalleOperacion.operacion.personaCliente.cliente.apellidos}</strong></p></center>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <p:commandButton actionListener="#{detalleVentaBean.cambiarEstado()}"
+                                                    styleClass="btn btn-danger btn-sm botonSuperior"
+                                                    value="Eliminar" 
+                                                    update=":formMostrar"
+                                                    onclick="$('#modalCambiarEstado').modal('hide');"/>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="botonSalir">Cancelar</button>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

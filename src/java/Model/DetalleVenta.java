@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQueries({@NamedQuery(name="busquedaPorNombreVentaRepuesto", query="from DetalleVenta as dv where dv.detalleOperacion.operacion.personaCliente.nombres like :descrip order by dv.comprobanteVenta.idComprobanteVenta desc")})
 @Entity
 @Table(name="DetalleVenta")
 public class DetalleVenta implements Serializable{
