@@ -4,10 +4,17 @@ import DAO.DetalleVentaDao;
 import DAO.DetalleVentaDaoImplement;
 import DAO.RepuestoDao;
 import DAO.RepuestoDaoImplement;
+import Model.ComprobanteVenta;
 import Model.DetalleOperacion;
 import Model.DetalleVenta;
+import Model.Login;
+import Model.Operacion;
+import Model.Persona;
 import Model.Producto;
 import Model.Repuesto;
+import Model.TipoComprobanteVenta;
+import Persistencia.NewHibernateUtil;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -15,6 +22,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.primefaces.event.DragDropEvent;
 
 @ManagedBean
@@ -24,9 +33,11 @@ public class detalleVentaBean {
     List<DetalleVenta> detalleVentas;
     Producto producto;
     Repuesto repuesto;
+    Operacion operacion;
+    ComprobanteVenta comprobanteVenta;
+    DetalleOperacion detalleOperacion;
     List<Repuesto> productos;
     List<Repuesto> productos2;
-    DetalleOperacion detalleOperacion;
     List<DetalleOperacion> detalleOperaciones;
     String estado = "";
     String busqueda = "";
@@ -36,11 +47,21 @@ public class detalleVentaBean {
     int flag = 0;
     boolean flag2 = false;
     
+    int idPersonaEmpleadoTemp;
+    int idPersonaClienteTemp;
+    int idTipoComprobanteVentaTemp;
+    String numeroTemp;
+    Date fechaTemp;
+    String descripcionTemp;
+    
     public detalleVentaBean() {
         detalleVenta = new DetalleVenta();
         repuesto = new Repuesto();
         producto = new Producto();
         producto.setRepuesto(repuesto);
+        operacion = new Operacion();
+        comprobanteVenta = new ComprobanteVenta();
+        detalleOperacion = new DetalleOperacion();
         detalleOperacion = new DetalleOperacion();
         detalleOperaciones = new ArrayList<>();
         productos2 = new ArrayList<>();
@@ -51,16 +72,69 @@ public class detalleVentaBean {
         productos2 = getProductos();
     }
     
-    public void insertar(){
+    public String insertar(){
         DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
-        
+        String redireccion = null;
         try {
-            flag = linkDAO.insertarVenta(detalleVenta);
+            Login user = (Login) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
+            
+            
+            //DATOS DE PERSONA CLIENTE
+            Persona personaClienteTemp = new Persona();
+            Persona personaEmpleadoTemp = new Persona();
+            personaClienteTemp.setIdPersona(idPersonaClienteTemp);
+            personaEmpleadoTemp.setIdPersona(user.getPersona().getIdPersona());
+            
+            //DATOS DE OPERACION
+            Operacion operacionTemp = new Operacion();
+            operacionTemp.setIdOperacion(linkDAO.ultimoIdOperacion());
+            operacionTemp.setEstado(true);
+            operacionTemp.setPersonaCliente(personaClienteTemp);
+            operacionTemp.setPersonaEmpleado(personaEmpleadoTemp);
+            
+            linkDAO.insertarOperacion(operacionTemp);
+            
+            //DATOS DE DETALLE OPERACIONES
+            List<Integer> listaEnteros = new ArrayList<>();
+            for(DetalleOperacion doTemp : detalleOperaciones){
+                doTemp.setOperacion(operacionTemp);
+                doTemp.setIdDetalleOperacion(linkDAO.ultimoIdDetalleOperacion());
+                linkDAO.insertarDetalleOperacion(doTemp);
+                listaEnteros.add(doTemp.getIdDetalleOperacion());
+            }
+            
+            //DATOS PARA TIPO COMPROBANTE VENTA
+            TipoComprobanteVenta tipoComprobanteVentaTemp = new TipoComprobanteVenta();
+            tipoComprobanteVentaTemp.setIdTipoComprobanteVenta(idTipoComprobanteVentaTemp);
+            
+            ComprobanteVenta comprobanteVentaTemp = new ComprobanteVenta();
+            comprobanteVentaTemp.setIdComprobanteVenta(linkDAO.ultimoIdComprobanteVenta());
+            comprobanteVentaTemp.setNumero(numeroTemp);
+            comprobanteVentaTemp.setFecha(fechaTemp);
+            comprobanteVentaTemp.setDescripcion(descripcionTemp);
+            comprobanteVentaTemp.setImporte(totalTemp);
+            comprobanteVentaTemp.setEstado(true);
+            comprobanteVentaTemp.setTipoComprobanteVenta(tipoComprobanteVentaTemp);
+            
+            linkDAO.insertarComprobanteVenta(comprobanteVentaTemp);
+            
+            List<DetalleVenta> detalleVentasTemp = new ArrayList<>();
+            
+            for(DetalleOperacion doTemp : detalleOperaciones){
+                DetalleVenta detalle = new DetalleVenta();
+                detalle.setIdDetalleVenta(linkDAO.ultimoIdDetalleVenta());
+                detalle.setDetalleOperacion(doTemp);
+                detalle.setComprobanteVenta(comprobanteVentaTemp);
+                flag = linkDAO.insertarVenta(detalle);
+                detalleVentasTemp.add(detalle);
+            }
+                        
             detalleVenta= new DetalleVenta();
             
             switch (flag) {
                 case 0:
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Venta insertada con Exito."));
+                    redireccion = "VentaRepuestos?faces-redirect=true";
                     break;
                 default:
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Al menos debe intentar insertar algo."));
@@ -68,9 +142,37 @@ public class detalleVentaBean {
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "Ocurrio un error al intentar Insertar una Venta. Error: " + e.getMessage()));
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
+        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "VentaRepuestos.xhtml");
+        return redireccion;
+    }
+        
+    public int ultimoIdOperacion(){
+        DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
+        int numero = linkDAO.ultimoIdOperacion();
+        return numero;
     }
     
+    public int ultimoIdComprobanteVenta(){
+        DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
+        int numero = linkDAO.ultimoIdComprobanteVenta();
+        return numero;
+    }
+    
+    public int ultimoIdDetalleOperacion(){
+        DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
+        int numero = linkDAO.ultimoIdDetalleOperacion();
+        return numero;
+    }
+    
+    public int ultimoIdDetalleVenta(){
+        DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
+        int numero = linkDAO.ultimoIdDetalleVenta();
+        return numero;
+    }
+        
     public void cambiarEstado(){
         DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
         
@@ -130,8 +232,13 @@ public class detalleVentaBean {
         totalTemp = 0;
         for(DetalleOperacion doperacion : detalleOperaciones){
             totalTemp = totalTemp + doperacion.getSubTotal();
+            totalTemp = Math.round(totalTemp*100)/100.0;
+            
             igv = (totalTemp * 18)/100;
+            igv = Math.round(igv*100)/100.0;
+            
             subtotal = totalTemp - igv;
+            subtotal = Math.round(subtotal*100)/100.0;
         }
     }
     
@@ -233,5 +340,69 @@ public class detalleVentaBean {
 
     public void setTotalTemp(double totalTemp) {
         this.totalTemp = totalTemp;
+    }
+
+    public Operacion getOperacion() {
+        return operacion;
+    }
+
+    public void setOperacion(Operacion operacion) {
+        this.operacion = operacion;
+    }
+
+    public ComprobanteVenta getComprobanteVenta() {
+        return comprobanteVenta;
+    }
+
+    public void setComprobanteVenta(ComprobanteVenta comprobanteVenta) {
+        this.comprobanteVenta = comprobanteVenta;
+    }
+
+    public int getIdPersonaEmpleadoTemp() {
+        return idPersonaEmpleadoTemp;
+    }
+
+    public void setIdPersonaEmpleadoTemp(int idPersonaEmpleadoTemp) {
+        this.idPersonaEmpleadoTemp = idPersonaEmpleadoTemp;
+    }
+
+    public int getIdPersonaClienteTemp() {
+        return idPersonaClienteTemp;
+    }
+
+    public void setIdPersonaClienteTemp(int idPersonaClienteTemp) {
+        this.idPersonaClienteTemp = idPersonaClienteTemp;
+    }
+
+    public int getIdTipoComprobanteVentaTemp() {
+        return idTipoComprobanteVentaTemp;
+    }
+
+    public void setIdTipoComprobanteVentaTemp(int idTipoComprobanteVentaTemp) {
+        this.idTipoComprobanteVentaTemp = idTipoComprobanteVentaTemp;
+    }
+
+    public String getNumeroTemp() {
+        return numeroTemp;
+    }
+
+    public void setNumeroTemp(String numeroTemp) {
+        this.numeroTemp = numeroTemp;
+    }
+
+    public Date getFechaTemp() {
+        return fechaTemp;
+    }
+
+    public void setFechaTemp(Date fechaTemp) {
+        this.fechaTemp = fechaTemp;
+    }
+
+    public String getDescripcionTemp() {
+        return descripcionTemp;
+    }
+
+    public void setDescripcionTemp(String descripcionTemp) {
+        this.descripcionTemp = descripcionTemp;
     }
 }

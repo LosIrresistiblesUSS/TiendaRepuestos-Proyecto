@@ -15,7 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.NamedQuery;
 
+@NamedQuery(name="ultimoIdComprobanteVenta", query="from ComprobanteVenta as cv order by cv.idComprobanteVenta desc")
 @Entity
 @Table(name="ComprobanteVenta")
 public class ComprobanteVenta implements Serializable {

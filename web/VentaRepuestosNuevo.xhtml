@@ -31,7 +31,7 @@
                                     <label class="control-label col-md-2" for="txtCliente">Cliente:</label>
                                     <div class="col-md-3">
                                         <div class="input-group">
-                                            <p:inputText value="#{detalleVentaBean.detalleVenta.detalleOperacion.operacion.personaCliente.cliente.idPersona}" id="descripcion" class="form-control" placeholder="Busca Cliente"/>
+                                            <p:inputText value="#{detalleVentaBean.idPersonaClienteTemp}" id="descripcion" class="form-control" placeholder="Busca Cliente"/>
                                             <span class="input-group-btn">
                                                 <button class="btn btn-primary" type="button" href="#modalAgregarCliente" data-toggle="modal" id="buscarCliente"><span class="glyphicon glyphicon-search icono-text"></span></button>
                                             </span>
@@ -42,25 +42,25 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-2" for="cbTipoComprobante">Comprobante:</label>
                                     <div class="col-md-3">
-                                        <p:selectOneMenu id="cbTipoComprobante" value="#{detalleVentaBean.detalleVenta.comprobanteVenta.tipoComprobanteVenta.idTipoComprobanteVenta}" class="estilos-combo">
+                                        <p:selectOneMenu id="cbTipoComprobante" value="#{detalleVentaBean.idTipoComprobanteVentaTemp}" class="estilos-combo">
                                             <f:selectItem itemLabel="Boleta" itemValue="1" />
                                             <f:selectItem itemLabel="Factura" itemValue="2" />
                                         </p:selectOneMenu>
                                     </div>
                                     <label class="control-label col-md-2" for="txtNumero">Numero:</label>
                                     <div class="col-md-3">
-                                        <p:inputText value="#{detalleVentaBean.detalleVenta.comprobanteVenta.numero}" id="txtNumero" class="form-control" placeholder="Numero de Comprobante"/>
+                                        <p:inputText value="#{detalleVentaBean.numeroTemp}" id="txtNumero" class="form-control" placeholder="Numero de Comprobante"/>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2" for="txtFecha">Fecha</label>
                                     <div class="col-md-3">
-                                        <input class="form-control" type="date" id="txtFecha" min="2016-01-01" max="2030-12-31" value="#{detalleVentaBean.detalleVenta.comprobanteVenta.fecha}"/>
+                                        <input class="form-control" type="date" id="txtFecha" min="2016-01-01" max="2030-12-31" value="#{detalleVentaBean.fechaTemp}"/>
                                     </div>
                                     <label class="control-label col-md-2" for="txtDescripcion">Descripción:</label>
                                     <div class="col-md-3">
-                                        <p:inputText value="#{detalleVentaBean.detalleVenta.comprobanteVenta.descripcion}" id="txtDescripcion" class="form-control" placeholder="Descripción"/>
+                                        <p:inputText value="#{detalleVentaBean.descripcionTemp}" id="txtDescripcion" class="form-control" placeholder="Descripción"/>
                                     </div>
                                 </div>
                             
@@ -152,8 +152,9 @@
                             <br />
                             <div class="form-group">
                                 <center>
-                                    <input class="btn btn-primary" value="Registrar Venta" onclick="insertar()" id="btnInsertar" />
-                                    <input class="btn btn-primary" type="button" value="Cancelar" onclick="cancelar()" id="btnCancelar" />
+                                    
+                                    <p:commandButton actionListener="#{detalleVentaBean.insertar()}" styleClass="btn btn-primary btn-sm botonSuperior" value="Registrar venta" />
+                                    <a href="VentaRepuestos.xhtml" class="btn btn-primary">Cancelar</a>
                                 </center>
                             </div>
                         
