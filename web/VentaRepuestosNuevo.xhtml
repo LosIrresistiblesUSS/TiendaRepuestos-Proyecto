@@ -23,51 +23,147 @@
             </div>
                 
             <section class="container">
-                <div class="panel panel-primary">
-                    <div class="panel-heading panel-heading-2"></div>
-                    <div class="panel-body">
-                        <form name="frmMnt" id="frmMnt" method="post" class="form-horizontal form-principal">
+                <h:form id="formVenta" class="form-horizontal">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panel-heading-2"></div>
+                        <div class="panel-body">
+                                <div class="form-group"><br />
+                                    <label class="control-label col-md-2" for="txtCliente">Cliente:</label>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <p:inputText value="#{detalleVentaBean.detalleVenta.detalleOperacion.operacion.personaCliente.cliente.idPersona}" id="descripcion" class="form-control" placeholder="Busca Cliente"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" type="button" href="#modalAgregarCliente" data-toggle="modal" id="buscarCliente"><span class="glyphicon glyphicon-search icono-text"></span></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" for="cbTipoComprobante">Comprobante:</label>
+                                    <div class="col-md-3">
+                                        <p:selectOneMenu id="cbTipoComprobante" value="#{detalleVentaBean.detalleVenta.comprobanteVenta.tipoComprobanteVenta.idTipoComprobanteVenta}" class="estilos-combo">
+                                            <f:selectItem itemLabel="Boleta" itemValue="1" />
+                                            <f:selectItem itemLabel="Factura" itemValue="2" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                    <label class="control-label col-md-2" for="txtNumero">Numero:</label>
+                                    <div class="col-md-3">
+                                        <p:inputText value="#{detalleVentaBean.detalleVenta.comprobanteVenta.numero}" id="txtNumero" class="form-control" placeholder="Numero de Comprobante"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2" for="txtFecha">Fecha</label>
+                                    <div class="col-md-3">
+                                        <input class="form-control" type="date" id="txtFecha" min="2016-01-01" max="2030-12-31" value="#{detalleVentaBean.detalleVenta.comprobanteVenta.fecha}"/>
+                                    </div>
+                                    <label class="control-label col-md-2" for="txtDescripcion">Descripción:</label>
+                                    <div class="col-md-3">
+                                        <p:inputText value="#{detalleVentaBean.detalleVenta.comprobanteVenta.descripcion}" id="txtDescripcion" class="form-control" placeholder="Descripción"/>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                        
+                        <script type="text/javascript">
+                            function handleDrop(event, ui) {
+                                var droppedCar = ui.draggable;
+
+                                droppedCar.fadeOut('fast');
+                            }
+                        </script>
+                    
+                        <p:fieldset id="availableCarsField" legend="Repuestos Disponibles">
+                            <p:dataGrid id="repuestosDisponibles" var="rep" value="#{detalleVentaBean.productos2}" columns="4" rows="8" paginator="true" class="table"
+                                        paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+                                        rowsPerPageTemplate="6,12,16" paginatorPosition="bottom">
+                                <p:panel id="pnl" header="#{rep.producto.descripcion}" style="text-align:center;">
+                                    <h:panelGrid columns="1" style="width:100%;">
+                                        <p>#{rep.producto.precio}</p>
+                                        <img src="resources/img/repuestos/#{detalleVentaBean.validarImagen(rep.imagen)}" width="50px" height="50px"/>
+                                    </h:panelGrid>
+                                </p:panel>
+
+                                <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+                            </p:dataGrid>
+                        </p:fieldset>
+
+                        <p:fieldset id="repuestosSeleccionados" legend="Repuestos Seleccionados" style="margin-top:20px">
+                            <p:outputPanel id="dropArea">
+                                <h:outputText value="!!!Soltar Aquí!!!" rendered="#{empty detalleVentaBean.detalleOperaciones}" style="font-size:24px;" />
+                                <p:dataTable id="selectedCarsTable" var="do" value="#{detalleVentaBean.detalleOperaciones}" rendered="#{not empty detalleVentaBean.detalleOperaciones}">
+                                    <p:column headerText="Descripción">
+                                        <h:outputText value="#{do.producto.descripcion}" />
+                                    </p:column>
+
+                                    <p:column headerText="Cantidad">
+                                        <h:outputText value="#{do.cantidad}" />
+                                    </p:column>
+
+                                    <p:column headerText="Precio">
+                                        <h:outputText value="#{do.producto.precio}" />
+                                    </p:column>
+
+                                    <p:column headerText="SubTotal">
+                                        <h:outputText value="#{do.subTotal}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:outputPanel>
+                        </p:fieldset>
+
+                        <p:droppable for="repuestosSeleccionados" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="repuestosDisponibles" onDrop="handleDrop">
+                            <p:ajax listener="#{detalleVentaBean.onCarDrop}" update="dropArea repuestosDisponibles precios" />
+                        </p:droppable>   
+                        
+                        
+                        <br />
+                        
+                        <p:fieldset id="precios">
                             <div class="form-group">
-                                <label class="control-label col-md-2" for="txtCliente">Cliente:</label>
-                                <div class="col-lg-3">
+                                <label class="control-label col-md-5" for="txtSubTotalGeneral">Sub Total:</label>
+                                <div class="col-md-2">
                                     <div class="input-group">
-                                        <p:inputText value="#{tipoClienteBean.tipoCliente.descripcion}" id="descripcion" class="form-control" placeholder="Busca Cliente"/>
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="button" href="#modalAgregarCliente" data-toggle="modal" id="buscarCliente"><span class="glyphicon glyphicon-search icono-text"></span></button>
-                                        </span>
+                                        <span class="input-group-addon">S/</span>
+                                        <p:inputText value="#{detalleVentaBean.subtotal}" disabled="true" id="txtSubTotal" class="form-control" placeholder="Subtotal"/>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-2" for="selectIdTipoComprobanteVenta">Tipo de Comprobante:</label>
-                                <div class="col-md-3">
-                                    <select class="form-control" id="selectIdTipoComprobanteVenta">
-                                        
-                                        <option value="">Holaaaa</option>
-                                        
-                                    </select>
-                                </div>
-                                <label class="control-label col-md-2" for="txtNumero">Numero:</label>
-                                <div class="col-md-3">
-                                    <input class="form-control txtNumero" type="text" id="txtNumeroBoleta" value="" />
-                                    <input class="form-control" type="hidden" id="txtNumeroFactura" value="" />
+                                <label class="control-label col-md-5" for="txtIgvGeneral">IGV:</label>
+                                <div class="col-md-2">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">S/</span>
+                                        <p:inputText value="#{detalleVentaBean.igv}" disabled="true" id="txtIgvGeneral" class="form-control" placeholder="Igv"/>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label col-md-2" for="txtFecha">Fecha</label>
-                                <div class="col-md-3">
-                                    <input class="form-control" type="date" id="txtFecha" min="2016-01-01" max="2030-12-31" value=""/>
-                                </div>
-                                <label class="control-label col-md-2" for="txtDescripcion">Descripción:</label>
-                                <div class="col-md-3">
-                                    <input class="form-control" type="text" id="txtDescripcion" />
-                                </div>
+                                    <label class="control-label col-md-5" for="txtTotalGeneral">Total:</label>
+                                    <div class="col-md-2">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">S/</span>
+                                            <p:inputText value="#{detalleVentaBean.totalTemp}" disabled="true" id="txtTotalGeneral" class="form-control" placeholder="Total"/>
+                                        </div>
+                                    </div>
                             </div>
-                        </form>
+                            <br />
+                            <div class="form-group">
+                                <center>
+                                    <input class="btn btn-primary" value="Registrar Venta" onclick="insertar()" id="btnInsertar" />
+                                    <input class="btn btn-primary" type="button" value="Cancelar" onclick="cancelar()" id="btnCancelar" />
+                                </center>
+                            </div>
+                        
+                        </p:fieldset>
+                        
+                        <div class="panel-heading panel-heading-2"></div>
                     </div>
-                </div>
+                    
+                    <br /><br />
+                </h:form>
             </section>
                 
             </ui:define>

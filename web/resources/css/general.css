@@ -80,6 +80,31 @@ body{
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+.ui-selectonemenu-label{
+    padding-top: 0px;
+}
+
+.ui-selectonemenu-item{
+    background: #fff;
+}
+
+.ui-selectonemenu-items{
+    background: #fff;
+}
+
+.ui-selectonemenu{
+    height: 34px;
+    width: 100% !important;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
 .ui-state-hover{
     background: #e0f7fa;
 }
@@ -255,4 +280,22 @@ thead{
 
 .alineacionVertical{
     vertical-align:middle !important;
+}
+
+.ui-datagrid-content{
+    border: #ccc 2px solid;
+}
+
+.ui-panel{
+    border: #ccc 1px solid;
+    max-height: 200px !important;
+    max-width: 200px !important;
+}
+
+.ui-panel-titlebar{
+    background: #b2dfdb;
+}
+
+.ui-panel-content{
+    background: #fff !important;
 }
