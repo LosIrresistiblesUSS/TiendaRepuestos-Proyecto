@@ -234,7 +234,7 @@ public class detalleVentaBean {
             totalTemp = totalTemp + doperacion.getSubTotal();
             totalTemp = Math.round(totalTemp*100)/100.0;
             
-            igv = (totalTemp * 18)/100;
+            igv = (totalTemp / 1.18)*0.18;
             igv = Math.round(igv*100)/100.0;
             
             subtotal = totalTemp - igv;

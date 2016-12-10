@@ -4,7 +4,6 @@ import Model.ComprobanteVenta;
 import Model.DetalleOperacion;
 import Model.DetalleVenta;
 import Model.Operacion;
-import Model.TipoServicio;
 import Persistencia.NewHibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;
