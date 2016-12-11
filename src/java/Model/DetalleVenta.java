@@ -13,7 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @NamedQueries({
-    @NamedQuery(name="busquedaPorNombreVentaRepuesto", query="from DetalleVenta as dv where dv.detalleOperacion.operacion.personaCliente.nombres like :descrip order by dv.comprobanteVenta.idComprobanteVenta desc"),
+    @NamedQuery(name="busquedaPorNombreVentaRepuesto", query="select distinct dv from DetalleVenta as dv where dv.detalleOperacion.operacion.personaCliente.nombres like :descrip group by dv.comprobanteVenta.idComprobanteVenta order by dv.comprobanteVenta.idComprobanteVenta desc"),
     @NamedQuery(name="ultimoIdDetalleVenta", query="from DetalleVenta as dv order by dv.idDetalleVenta desc")
 })
 @Entity
