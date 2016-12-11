@@ -47,6 +47,7 @@ public class detalleVentaBean {
     
     String estado = "";
     String busqueda = "";
+    String nombreOrazonSocialTemp = "";
     double subtotal = 0;
     double igv = 0;
     double totalTemp = 0;
@@ -196,6 +197,7 @@ public class detalleVentaBean {
     
     public void cambiarCliente(){
         idPersonaClienteTemp = persona.getIdPersona();
+        nombreOrazonSocialTemp = persona.getCliente().getApellidos() + persona.getCliente().getRazonSocial();
     }
 
     public DetalleVenta getDetalleVenta() {
@@ -464,5 +466,13 @@ public class detalleVentaBean {
 
     public void setBusquedaCliente(String busquedaCliente) {
         this.busquedaCliente = busquedaCliente;
+    }
+
+    public String getNombreOrazonSocialTemp() {
+        return nombreOrazonSocialTemp;
+    }
+
+    public void setNombreOrazonSocialTemp(String nombreOrazonSocialTemp) {
+        this.nombreOrazonSocialTemp = nombreOrazonSocialTemp;
     }
 }

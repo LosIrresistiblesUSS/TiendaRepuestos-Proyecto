@@ -32,7 +32,7 @@
                                     <label class="control-label col-md-2" for="txtCliente">Cliente:</label>
                                     <div class="col-md-3">
                                         <div class="input-group">
-                                            <p:inputText value="#{detalleVentaBean.idPersonaClienteTemp}" id="descripcion" class="form-control" placeholder="Busca Cliente"/>
+                                            <p:inputText value="#{detalleVentaBean.nombreOrazonSocialTemp}" id="descripcion" class="form-control" placeholder="Buscar Cliente" disabled="true"/>
                                             <span class="input-group-btn">
                                                 <button class="btn btn-primary botonBuscarCliente" onclick="$('#modalCliente').modal('show');" type="button" href="#modalAgregarCliente" data-toggle="modal" id="buscarCliente"><span class="glyphicon glyphicon-search icono-text"></span></button>
                                             </span>
@@ -237,12 +237,12 @@
                                         <p:column headerText="Accion" class="alineacionVertical">
                                             <center>
                                                 <!-- boton de acción Editar-->
-                                                <p:commandButton actionListener="#{detalleVentaBean.cambiarCliente()}"
+                                                <p:commandButton action="#{detalleVentaBean.cambiarCliente()}"
                                                     styleClass="btn btn-primary btn-xs imgSeleccionar"
                                                     value=""
                                                     oncomplete="$('#modalCliente').modal('hide');"
                                                     update=":formVenta:datosComprobante" >
-                                                <f:setPropertyActionListener target="#{detalleVentaBean.persona}" value="#{cli.persona}"/>
+                                                    <f:setPropertyActionListener target="#{detalleVentaBean.persona}" value="#{cli.persona}"/>
                                                 </p:commandButton>
                                             </center>
                                         </p:column>
