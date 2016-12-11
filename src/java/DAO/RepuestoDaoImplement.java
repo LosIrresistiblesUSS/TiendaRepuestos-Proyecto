@@ -2,7 +2,6 @@ package DAO;
 
 import Model.Producto;
 import Model.Repuesto;
-import Model.TipoServicio;
 import Persistencia.NewHibernateUtil;
 import java.util.List;
 import org.hibernate.HibernateException;

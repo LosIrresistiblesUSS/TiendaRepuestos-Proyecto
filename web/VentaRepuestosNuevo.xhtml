@@ -11,12 +11,12 @@
         <ui:composition template="./WEB-INF/plantilla.xhtml">
             <ui:define name="content">
                 
-                <section class="jumbotron">
-                    <div class="container">
-                        <h2><strong>Venta de Repuestos</strong></h2>
-                    </div>
-                </section>
-                <div class="page-header">
+            <section class="jumbotron">
+                <div class="container">
+                    <h2><strong>Venta de Repuestos</strong></h2>
+                </div>
+            </section>
+            <div class="page-header">
                 <div class="container">
                     <h2>Nueva <small>Venta de Repuestos</small></h2>
                 </div>
@@ -27,13 +27,14 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-heading-2"></div>
                         <div class="panel-body">
+                            <p:fieldset id="datosComprobante">
                                 <div class="form-group"><br />
                                     <label class="control-label col-md-2" for="txtCliente">Cliente:</label>
                                     <div class="col-md-3">
                                         <div class="input-group">
                                             <p:inputText value="#{detalleVentaBean.idPersonaClienteTemp}" id="descripcion" class="form-control" placeholder="Busca Cliente"/>
                                             <span class="input-group-btn">
-                                                <button class="btn btn-primary" type="button" href="#modalAgregarCliente" data-toggle="modal" id="buscarCliente"><span class="glyphicon glyphicon-search icono-text"></span></button>
+                                                <button class="btn btn-primary botonBuscarCliente" onclick="$('#modalCliente').modal('show');" type="button" href="#modalAgregarCliente" data-toggle="modal" id="buscarCliente"><span class="glyphicon glyphicon-search icono-text"></span></button>
                                             </span>
                                         </div>
                                     </div>
@@ -63,7 +64,7 @@
                                         <p:inputText value="#{detalleVentaBean.descripcionTemp}" id="txtDescripcion" class="form-control" placeholder="Descripción"/>
                                     </div>
                                 </div>
-                            
+                            </p:fieldset>
                         </div>
                         
                         <script type="text/javascript">
@@ -166,6 +167,95 @@
                     <br /><br />
                 </h:form>
             </section>
+            
+                <!-- Modal para Seleccionar un Cliente -->
+                <div class="modal fade bs-example-modal-lg" id="modalCliente" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title text-center" id="myModalLabel">Seleccionar un Cliente</h3>
+                            </div>
+                            <div class="panel-body cuerpo-buscarCliente">
+                                <h:form id="formInsertar">
+                                    <div class="form-group row">
+                                        <div class="cuadro-busqueda col-md-3 col-sm-4 col-xs-12">
+                                            <p:inputText value="#{detalleVentaBean.busquedaCliente}" placeholder="Apellidos o Razón Social" class="txtBusqueda form-control">
+                                                <p:ajax event="keyup" update=":formMostrar" listener="#{detalleVentaBean.listarCliente()}" />
+                                            </p:inputText>
+                                        </div>
+                                        <div class="col-md-9 col-sm-8 col-xs-12">
+                                            <div class="espacio-buscar"></div>
+                                            <div class="row col-md-12 col-sm-12 col-xs-12">
+                                                <p:commandButton styleClass="btn btn-primary btn-sm botonSuperior"
+                                                    value="Buscar"
+                                                    actionListener="#{detalleVentaBean.listarCliente()}"
+                                                    update=":formMostrar">
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </h:form>
+
+
+                                <h:form>
+                                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                                </h:form>
+
+                                <h:form id="formMostrar">
+
+                                    <p:dataTable var="cli" value="#{detalleVentaBean.personaClientes}" tableStyleClass="table table-bordered" 
+                                                 emptyMessage="No hay Clientes disponibles" 
+                                                 paginator="true" rows="10" 
+                                                 paginatorPosition="bottom" 
+                                                 paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown} {CurrentPageReport}" 
+                                                 currentPageReportTemplate="(Registros {startRecord} - {endRecord} de {totalRecords}, Pagina: {currentPage} de {totalPages})" 
+                                                 rowsPerPageTemplate="5,10,20,50">
+                                        <!-- Columnas-->
+                                        <p:column headerText="Id" class="alineacionVertical">
+                                            <center>
+                                                <h:outputText value="#{cli.idPersona}"/>
+                                            </center>
+                                        </p:column>
+
+                                        <p:column headerText="Nombres" class="alineacionVertical">
+                                            <h:outputText value="#{cli.persona.nombres}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Apellidos o Razón Social" class="alineacionVertical">
+                                            <h:outputText value="#{cli.apellidos}#{cli.razonSocial}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Nro. Documento" class="alineacionVertical">
+                                            <h:outputText value="#{cli.persona.numeroDocumento}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Telefono" class="alineacionVertical">
+                                            <h:outputText value="#{cli.persona.telefono}"/>
+                                        </p:column>
+
+                                        <p:column headerText="Accion" class="alineacionVertical">
+                                            <center>
+                                                <!-- boton de acción Editar-->
+                                                <p:commandButton actionListener="#{detalleVentaBean.cambiarCliente()}"
+                                                    styleClass="btn btn-primary btn-xs imgSeleccionar"
+                                                    value=""
+                                                    oncomplete="$('#modalCliente').modal('hide');"
+                                                    update=":formVenta:datosComprobante" >
+                                                <f:setPropertyActionListener target="#{detalleVentaBean.persona}" value="#{cli.persona}"/>
+                                                </p:commandButton>
+                                            </center>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </h:form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" id="botonSalir">Salir</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
             </ui:define>
         </ui:composition>

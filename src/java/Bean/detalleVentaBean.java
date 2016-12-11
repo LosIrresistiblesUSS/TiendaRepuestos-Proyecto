@@ -1,9 +1,12 @@
 package Bean;
 
+import DAO.ClienteDao;
+import DAO.ClienteDaoImplement;
 import DAO.DetalleVentaDao;
 import DAO.DetalleVentaDaoImplement;
 import DAO.RepuestoDao;
 import DAO.RepuestoDaoImplement;
+import Model.Cliente;
 import Model.ComprobanteVenta;
 import Model.DetalleOperacion;
 import Model.DetalleVenta;
@@ -13,7 +16,6 @@ import Model.Persona;
 import Model.Producto;
 import Model.Repuesto;
 import Model.TipoComprobanteVenta;
-import Persistencia.NewHibernateUtil;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.primefaces.event.DragDropEvent;
 
 @ManagedBean
@@ -39,6 +39,12 @@ public class detalleVentaBean {
     List<Repuesto> productos;
     List<Repuesto> productos2;
     List<DetalleOperacion> detalleOperaciones;
+    
+    Persona persona;
+    Cliente cliente;
+    String busquedaCliente = "";
+    List<Cliente> personaClientes;
+    
     String estado = "";
     String busqueda = "";
     double subtotal = 0;
@@ -65,6 +71,10 @@ public class detalleVentaBean {
         detalleOperacion = new DetalleOperacion();
         detalleOperaciones = new ArrayList<>();
         productos2 = new ArrayList<>();
+        
+        cliente = new Cliente();
+        persona = new Persona();
+        persona.setCliente(cliente);
     }
     
     @PostConstruct
@@ -183,6 +193,10 @@ public class detalleVentaBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "Ocurrio un error al intentar actualizar el estado de la Venta. Error: " + e.getMessage()));
         }
     }
+    
+    public void cambiarCliente(){
+        idPersonaClienteTemp = persona.getIdPersona();
+    }
 
     public DetalleVenta getDetalleVenta() {
         return detalleVenta;
@@ -200,6 +214,18 @@ public class detalleVentaBean {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Resultados de busqueda que contienen el texto: " + busqueda));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existen Ventas relacionadas con los clientes que contengan el siguiente texto: " + busqueda));
+            }   
+        }
+    }
+    
+    public void listarCliente(){
+        this.personaClientes = getPersonaClientes();
+        
+        if (!busquedaCliente.equals("")) {
+            if (!personaClientes.isEmpty()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Resultados de busqueda que contienen el texto: " + busquedaCliente));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existen Clientes que contengan el siguiente texto: " + busquedaCliente));
             }   
         }
     }
@@ -404,5 +430,39 @@ public class detalleVentaBean {
 
     public void setDescripcionTemp(String descripcionTemp) {
         this.descripcionTemp = descripcionTemp;
+    }
+    
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Cliente> getPersonaClientes() {
+        ClienteDao linkDAO = new ClienteDaoImplement();
+        personaClientes=linkDAO.mostrarCliente(busquedaCliente);
+        return personaClientes;
+    }
+
+    public void setPersonaClientes(List<Cliente> personaClientes) {
+        this.personaClientes = personaClientes;
+    }
+    
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public String getBusquedaCliente() {
+        return busquedaCliente;
+    }
+
+    public void setBusquedaCliente(String busquedaCliente) {
+        this.busquedaCliente = busquedaCliente;
     }
 }

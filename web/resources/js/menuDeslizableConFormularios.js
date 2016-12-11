@@ -65,8 +65,14 @@ window.onload = function()
     $('#modalNuevoTipoCliente').on('shown.bs.modal', function () {
         $('.tipoCliente-descripcion').focus();
     });
+    
     $('#modalModificarTipoCliente').on('shown.bs.modal', function () {
         $('.tipoCliente-descripcion').focus();
     });
+    
+    $('#modalCliente').on('shown.bs.modal', function () {
+        $('.txtBusqueda').focus();
+    });
+    
     hacerFoco();
 };

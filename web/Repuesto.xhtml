@@ -231,32 +231,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- Modal para Eliminar un Registro -->
-                <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h3 class="modal-title text-center" id="myModalLabel">Eliminar Repuesto</h3>
-                            </div>
-                            <h:form id="formEliminar" styleClass="form-horizontal">
-                                <div class="modal-body">
-                                    <center><p><strong>¿Está seguro de eliminar el Repuesto?</strong></p></center>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <p:commandButton actionListener="#{repuestoBean.eliminar()}"
-                                                    styleClass="btn btn-danger btn-sm botonSuperior"
-                                                    value="Eliminar" 
-                                                    update=":formMostrar"
-                                                    onclick="$('#modalEliminar').modal('hide');"/>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="botonSalir">Cancelar</button>
-                                </div>
-                            </h:form>
-                        </div>
-                    </div>
-                </div>
             </ui:define>
         </ui:composition>
     </body>

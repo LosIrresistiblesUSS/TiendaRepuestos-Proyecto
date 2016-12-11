@@ -278,6 +278,23 @@ thead{
     margin: 4px -4px 4px 4px;
 }
 
+.imgSeleccionar .ui-button-text{
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/icon/check.png);
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    margin: 4px -4px 4px 4px;
+}
+
+.boton-buscarCliente{
+    padding: 0px !important;
+}
+
+.botonBuscarCliente{
+    height: 34px;
+}
+
 .alineacionVertical{
     vertical-align:middle !important;
 }
@@ -298,4 +315,9 @@ thead{
 
 .ui-panel-content{
     background: #fff !important;
+}
+
+.cuerpo-buscarCliente{
+    margin-bottom: 0px;
+    padding: 20px 20px 0px 20px;
 }
