@@ -76,9 +76,31 @@
                         </script>
                     
                         <p:fieldset id="availableCarsField" legend="Repuestos Disponibles">
-                            <p:dataGrid id="repuestosDisponibles" var="rep" value="#{detalleVentaBean.productos2}" columns="4" rows="8" paginator="true" class="table"
+                            
+                            <!-- BUSQUEDA DE REPUESTOS -->
+                            <div class="form-group row">
+                                <div class="cuadro-busqueda col-md-3 col-sm-4 col-xs-12">
+                                    <p:inputText value="#{detalleVentaBean.busquedaRepuesto}" placeholder="Busqueda por Descripción" class="txtBusqueda form-control">
+                                        <p:ajax event="keyup" update="repuestosDisponibles" listener="#{detalleVentaBean.listarProductos()}" />
+                                    </p:inputText>
+                                </div>
+                                <div class="col-md-9 col-sm-8 col-xs-12">
+                                    <div class="espacio-buscar"></div>
+                                    <div class="row col-md-12 col-sm-12 col-xs-12">
+                                        <p:commandButton styleClass="btn btn-primary btn-sm botonSuperior"
+                                            value="Buscar"
+                                            actionListener="#{detalleVentaBean.listarProductos()}"
+                                            update="repuestosDisponibles">
+                                        </p:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                            
+                            <p:dataGrid id="repuestosDisponibles" var="rep" value="#{detalleVentaBean.productosFiltrados}" columns="4" rows="8" paginator="true" class="table"
                                         paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
-                                        rowsPerPageTemplate="6,12,16" paginatorPosition="bottom">
+                                        rowsPerPageTemplate="6,12,16" paginatorPosition="bottom" emptyMessage="No hay Repuestos disponibles">
                                 <p:panel id="pnl" header="#{rep.producto.descripcion}" style="text-align:center;">
                                     <h:panelGrid columns="1" style="width:100%;">
                                         <p>#{rep.producto.precio}</p>

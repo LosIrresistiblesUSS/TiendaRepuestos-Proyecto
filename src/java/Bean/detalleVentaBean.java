@@ -38,11 +38,13 @@ public class detalleVentaBean {
     DetalleOperacion detalleOperacion;
     List<Repuesto> productos;
     List<Repuesto> productos2;
+    List<Repuesto> productosFiltrados;
     List<DetalleOperacion> detalleOperaciones;
     
     Persona persona;
     Cliente cliente;
     String busquedaCliente = "";
+    String busquedaRepuesto = "";
     List<Cliente> personaClientes;
     
     String estado = "";
@@ -72,6 +74,7 @@ public class detalleVentaBean {
         detalleOperacion = new DetalleOperacion();
         detalleOperaciones = new ArrayList<>();
         productos2 = new ArrayList<>();
+        productosFiltrados = new ArrayList<>();
         
         cliente = new Cliente();
         persona = new Persona();
@@ -81,6 +84,7 @@ public class detalleVentaBean {
     @PostConstruct
     public void init() {
         productos2 = getProductos();
+        productosFiltrados = getProductos();
     }
     
     public String insertar(){
@@ -140,7 +144,7 @@ public class detalleVentaBean {
                 detalleVentasTemp.add(detalle);
             }
                         
-            detalleVenta= new DetalleVenta();
+            detalleVenta= new DetalleVenta();            
             
             switch (flag) {
                 case 0:
@@ -220,6 +224,27 @@ public class detalleVentaBean {
         }
     }
     
+    public void listarProductos(){
+        String nombreProductoString = "";
+        List<Repuesto> lista = new ArrayList<>();
+        for (Repuesto r : productos2) {
+            nombreProductoString = r.getProducto().getDescripcion().toLowerCase();
+            if (nombreProductoString.contains(busquedaRepuesto.toLowerCase())) {
+                lista.add(r);
+            }
+        }
+        
+        productosFiltrados = lista;
+       
+        if (!busquedaRepuesto.equals("")) {
+            if (!lista.isEmpty()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Resultados de busqueda que contienen el texto: " + busquedaRepuesto));
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No existen Repuestos que contengan el siguiente texto: " + busquedaRepuesto));
+            }   
+        }
+    }
+    
     public void listarCliente(){
         this.personaClientes = getPersonaClientes();
         
@@ -254,6 +279,7 @@ public class detalleVentaBean {
         
         detalleOperaciones.add(dOpe);
         productos2.remove(rep);
+        productosFiltrados.remove(rep);
         
         subtotal = 0;
         igv = 0;
@@ -474,5 +500,21 @@ public class detalleVentaBean {
 
     public void setNombreOrazonSocialTemp(String nombreOrazonSocialTemp) {
         this.nombreOrazonSocialTemp = nombreOrazonSocialTemp;
+    }
+
+    public String getBusquedaRepuesto() {
+        return busquedaRepuesto;
+    }
+
+    public void setBusquedaRepuesto(String busquedaRepuesto) {
+        this.busquedaRepuesto = busquedaRepuesto;
+    }
+
+    public List<Repuesto> getProductosFiltrados() {
+        return productosFiltrados;
+    }
+
+    public void setProductosFiltrados(List<Repuesto> productosFiltrados) {
+        this.productosFiltrados = productosFiltrados;
     }
 }
