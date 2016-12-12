@@ -260,13 +260,15 @@ thead{
     margin: 4px -4px 4px 4px;
 }
 
-.imgReporte .ui-button-text{
-    width: 16px;
-    height: 16px;
+.imgReporte{
+    width: 36px;
+    height: 28px;
     background-image: url(../img/icon/imgReporte.png);
     background-repeat: no-repeat;
     background-size: 16px 16px;
-    margin: 4px -4px 4px 4px;
+    background-position-x: 9px;
+    background-position-y: 4px;
+    margin: 4px 1px 4px 4px;
 }
 
 .imgAnular .ui-button-text{

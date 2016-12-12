@@ -49,7 +49,7 @@ public class ComprobanteVenta implements Serializable {
     private TipoComprobanteVenta tipoComprobanteVenta;
     
     //-----One to Many-----//
-    @OneToMany(fetch=FetchType.LAZY)
+    @OneToMany(fetch=FetchType.EAGER)
     @JoinColumn(name="idComprobanteVenta")
     private List<DetalleVenta> detalleVentaList = new ArrayList<>();
 

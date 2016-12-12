@@ -9,6 +9,7 @@ import DAO.RepuestoDaoImplement;
 import Model.Cliente;
 import Model.ComprobanteVenta;
 import Model.DetalleOperacion;
+import Model.DetalleOperacionReporte;
 import Model.DetalleVenta;
 import Model.Login;
 import Model.Operacion;
@@ -16,14 +17,30 @@ import Model.Persona;
 import Model.Producto;
 import Model.Repuesto;
 import Model.TipoComprobanteVenta;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import org.primefaces.event.DragDropEvent;
 
 @ManagedBean
@@ -36,10 +53,14 @@ public class detalleVentaBean {
     Operacion operacion;
     ComprobanteVenta comprobanteVenta;
     DetalleOperacion detalleOperacion;
+    DetalleOperacionReporte detalleOperacionReporte;
+    List<DetalleOperacionReporte> detalleOperacionReportes;
     List<Repuesto> productos;
     List<Repuesto> productos2;
     List<Repuesto> productosFiltrados;
     List<DetalleOperacion> detalleOperaciones;
+    
+    List<DetalleOperacion> listaReporte = new ArrayList<>();
     
     Persona persona;
     Cliente cliente;
@@ -72,8 +93,10 @@ public class detalleVentaBean {
         comprobanteVenta = new ComprobanteVenta();
         detalleOperacion = new DetalleOperacion();
         detalleOperacion = new DetalleOperacion();
+        detalleOperacionReporte = new DetalleOperacionReporte();
         detalleOperaciones = new ArrayList<>();
         productos2 = new ArrayList<>();
+        detalleOperacionReportes = new ArrayList<>();
         productosFiltrados = new ArrayList<>();
         
         cliente = new Cliente();
@@ -85,6 +108,42 @@ public class detalleVentaBean {
     public void init() {
         productos2 = getProductos();
         productosFiltrados = getProductos();
+    }
+
+    public void exportarPDF(ActionEvent actionEvent) throws JRException, IOException{
+        Login user = (Login) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
+        this.comprobanteVenta = (ComprobanteVenta)actionEvent.getComponent().getAttributes().get("myattribute");
+        
+        
+        Map<String,Object> parametros= new HashMap<String,Object>();
+        parametros.put("empleado", user.getPersona().getEmpleado().getApellidos());
+        parametros.put("cliente",comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getApellidos() + comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getRazonSocial());
+        parametros.put("direccion", comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getDireccion());
+        parametros.put("documento", comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getNumeroDocumento());
+        parametros.put("fecha", comprobanteVenta.getFecha());
+        parametros.put("total", comprobanteVenta.getImporte());
+        parametros.put("tipoComprobante", comprobanteVenta.getTipoComprobanteVenta().getDescripcion().toUpperCase());
+        parametros.put("numero", comprobanteVenta.getNumero());
+        
+        try {
+            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/ComprobanteVenta.jasper"));
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(),parametros, new JRBeanCollectionDataSource(this.getListaReporte()));
+            
+            
+
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition","attachment; filename=ComprobanteVenta.pdf");
+            ServletOutputStream stream = response.getOutputStream();
+
+            JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (Exception e) {
+            System.out.println("ERROOOOOOOOR: "+ e.getMessage());
+        }
+        
     }
     
     public String insertar(){
@@ -298,7 +357,13 @@ public class detalleVentaBean {
     
     public List<DetalleVenta> getDetalleVentas() {
         DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
-        detalleVentas=linkDAO.mostrarVenta(busqueda);
+        detalleVentas=linkDAO.mostrarVentaConDistint(busqueda);
+        return detalleVentas;
+    }
+    
+    public List<DetalleVenta> getDetalleVentasSinDistint() {
+        DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
+        detalleVentas=linkDAO.mostrarVentaSinDistint(busqueda);
         return detalleVentas;
     }
 
@@ -516,5 +581,47 @@ public class detalleVentaBean {
 
     public void setProductosFiltrados(List<Repuesto> productosFiltrados) {
         this.productosFiltrados = productosFiltrados;
+    }
+
+    public List<DetalleOperacion> getListaReporte() {
+        List<DetalleOperacion> listaReporteTemp = new ArrayList<>();
+        List<DetalleVenta> listaDetalle = new ArrayList<>();
+        listaDetalle = getDetalleVentasSinDistint();
+        
+        for (DetalleVenta dv : listaDetalle) {
+            if(dv.getComprobanteVenta().getIdComprobanteVenta() == this.comprobanteVenta.getIdComprobanteVenta()){
+                listaReporteTemp.add(dv.getDetalleOperacion());
+            }
+        }
+        
+        listaReporte = listaReporteTemp;
+        return listaReporte;
+    }
+
+    public void setListaReporte(List<DetalleOperacion> listaReporte) {
+        this.listaReporte = listaReporte;
+    }
+
+    public DetalleOperacionReporte getDetalleOperacionReporte() {        
+        return detalleOperacionReporte;
+    }
+
+    public void setDetalleOperacionReporte(DetalleOperacionReporte detalleOperacionReporte) {
+        this.detalleOperacionReporte = detalleOperacionReporte;
+    }
+
+    public List<DetalleOperacionReporte> getDetalleOperacionReportes() {
+        for(DetalleOperacion dop : listaReporte){
+            detalleOperacionReporte.setCantidad(dop.getCantidad());
+            detalleOperacionReporte.setDescripcion(dop.getProducto().getDescripcion());
+            detalleOperacionReporte.setPrecio(dop.getPrecio());
+            detalleOperacionReporte.setSubTotal(dop.getSubTotal());
+            detalleOperacionReportes.add(detalleOperacionReporte);
+        }
+        return detalleOperacionReportes;
+    }
+
+    public void setDetalleOperacionReportes(List<DetalleOperacionReporte> detalleOperacionReportes) {
+        this.detalleOperacionReportes = detalleOperacionReportes;
     }
 }

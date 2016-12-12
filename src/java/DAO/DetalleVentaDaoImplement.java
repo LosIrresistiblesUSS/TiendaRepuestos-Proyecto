@@ -13,13 +13,33 @@ import org.hibernate.Session;
 public class DetalleVentaDaoImplement implements DetalleVentaDao {
 
     @Override
-    public List<DetalleVenta> mostrarVenta(String busqueda) {
+    public List<DetalleVenta> mostrarVentaConDistint(String busqueda) {
         Session session=null;
         List<DetalleVenta> lista=null;
         
         try {
             session= NewHibernateUtil.getSessionFactory().openSession();
-            Query query = session.getNamedQuery("busquedaPorNombreVentaRepuesto").setParameter("descrip", "%"+busqueda+"%");
+            Query query = session.getNamedQuery("busquedaPorNombreVentaRepuestoConDistint").setParameter("descrip", "%"+busqueda+"%");
+            lista=(List<DetalleVenta>) query.list();
+            
+        }catch (HibernateException e) {
+            System.out.println("Error en Método 'mostrarVenta': "+ e.getMessage());
+        }finally{
+            if(session!=null){
+                session.close();
+            }
+        }
+        return lista;
+    }
+    
+    @Override
+    public List<DetalleVenta> mostrarVentaSinDistint(String busqueda) {
+        Session session=null;
+        List<DetalleVenta> lista=null;
+        
+        try {
+            session= NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.getNamedQuery("busquedaPorNombreVentaRepuestoSinDistint").setParameter("descrip", "%"+busqueda+"%");
             lista=(List<DetalleVenta>) query.list();
             
         }catch (HibernateException e) {

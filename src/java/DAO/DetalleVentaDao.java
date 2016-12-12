@@ -7,7 +7,8 @@ import Model.Operacion;
 import java.util.List;
 
 public interface DetalleVentaDao {
-    public List<DetalleVenta> mostrarVenta(String busqueda);
+    public List<DetalleVenta> mostrarVentaConDistint(String busqueda);
+    public List<DetalleVenta> mostrarVentaSinDistint(String busqueda);
     public int insertarVenta(DetalleVenta detalleVenta);
     public int insertarOperacion(Operacion operacion);
     public int insertarComprobanteVenta(ComprobanteVenta comprobanteVenta);
