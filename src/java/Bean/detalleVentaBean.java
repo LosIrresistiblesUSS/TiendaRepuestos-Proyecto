@@ -116,13 +116,13 @@ public class detalleVentaBean {
         
         
         Map<String,Object> parametros= new HashMap<String,Object>();
-        parametros.put("empleado", user.getPersona().getEmpleado().getApellidos());
-        parametros.put("cliente",comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getApellidos() + comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getRazonSocial());
-        parametros.put("direccion", comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getDireccion());
+        parametros.put("empleado", user.getPersona().getEmpleado().getApellidos() + " ");
+        parametros.put("cliente",comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getApellidos() + comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getRazonSocial() + " ");
+        parametros.put("direccion", comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getDireccion() + " ");
         parametros.put("documento", comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getNumeroDocumento());
         parametros.put("fecha", comprobanteVenta.getFecha());
         parametros.put("total", comprobanteVenta.getImporte());
-        parametros.put("tipoComprobante", comprobanteVenta.getTipoComprobanteVenta().getDescripcion().toUpperCase());
+        parametros.put("tipoComprobante", comprobanteVenta.getTipoComprobanteVenta().getDescripcion().toUpperCase() + " ");
         parametros.put("numero", comprobanteVenta.getNumero());
         
         try {
