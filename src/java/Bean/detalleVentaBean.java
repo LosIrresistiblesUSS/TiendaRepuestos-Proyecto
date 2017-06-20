@@ -140,7 +140,7 @@ public class detalleVentaBean {
             stream.flush();
             stream.close();
             FacesContext.getCurrentInstance().responseComplete();
-        } catch (Exception e) {
+        } catch (IOException | JRException e) {
             System.out.println("ERROOOOOOOOR: "+ e.getMessage());
         }
         
