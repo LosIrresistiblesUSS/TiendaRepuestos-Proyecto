@@ -92,8 +92,23 @@
                         <div class="container btn-group1">
                             <h4 class="text-collapse">Reportes</h4>
                             <div class="btn-group btn-group-sm" role="group" aria-label="">
-                                <button type="button" class="btn btn-primary">Tipo Servicio</button>
-                                <button type="button" class="btn btn-primary">Servicio</button>
+                                    <h:form>
+                                        <h:commandButton class="btn btn-primary btn-xse" actionListener="#{reportesBean.reporteCliente()}"
+                                                         value="Clientes">
+                                        </h:commandButton>
+                            
+                                        <h:commandButton class="btn btn-primary btn-xse" actionListener="#{reportesBean.reporteRepuestos()}"
+                                                         value="Repuestos">
+                                        </h:commandButton>
+                                        
+                                        <h:commandButton class="btn btn-primary btn-xse" actionListener="#{reportesBean.reporteBoletas()}"
+                                                         value="Boletas">
+                                        </h:commandButton>
+                                        
+                                        <h:commandButton class="btn btn-primary btn-xse" actionListener="#{reportesBean.reporteFacturas()}"
+                                                         value="Facturas">
+                                        </h:commandButton>
+                                    </h:form>
                             </div>
                         </div>
                     </div>

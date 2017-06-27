@@ -6,6 +6,7 @@ import DAO.DetalleVentaDao;
 import DAO.DetalleVentaDaoImplement;
 import DAO.RepuestoDao;
 import DAO.RepuestoDaoImplement;
+import Helpers.Conexion;
 import Model.Cliente;
 import Model.ComprobanteVenta;
 import Model.DetalleOperacion;
@@ -19,6 +20,8 @@ import Model.Repuesto;
 import Model.TipoComprobanteVenta;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import Helpers.Conexion;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,6 +117,10 @@ public class detalleVentaBean {
         Login user = (Login) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
         this.comprobanteVenta = (ComprobanteVenta)actionEvent.getComponent().getAttributes().get("myattribute");
         
+        Conexion con;
+        Connection cn;
+        con = new Conexion();
+        cn = con.getConexion();
         
         Map<String,Object> parametros= new HashMap<String,Object>();
         parametros.put("empleado", user.getPersona().getEmpleado().getApellidos() + " ");
@@ -126,8 +133,8 @@ public class detalleVentaBean {
         parametros.put("numero", comprobanteVenta.getNumero());
         
         try {
-            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/ComprobanteVenta.jasper"));
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(),parametros, new JRBeanCollectionDataSource(this.getListaReporte()));
+            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ComprobanteVenta.jasper"));
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(),parametros, cn);
             
             
 
