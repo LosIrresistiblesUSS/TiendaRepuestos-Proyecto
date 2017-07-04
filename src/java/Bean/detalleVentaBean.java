@@ -42,7 +42,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.primefaces.event.DragDropEvent;
 
@@ -74,6 +73,9 @@ public class detalleVentaBean {
     String estado = "";
     String busqueda = "";
     String nombreOrazonSocialTemp = "";
+    String numeroDNICliente = "";
+    String direccionCliente = "";
+    String nombresCliente = "";
     double subtotal = 0;
     double igv = 0;
     double totalTemp = 0;
@@ -268,6 +270,9 @@ public class detalleVentaBean {
     public void cambiarCliente(){
         idPersonaClienteTemp = persona.getIdPersona();
         nombreOrazonSocialTemp = persona.getCliente().getApellidos() + persona.getCliente().getRazonSocial();
+        numeroDNICliente = persona.getNumeroDocumento();
+        direccionCliente = persona.getDireccion();
+        nombresCliente = persona.getNombres();
     }
 
     public DetalleVenta getDetalleVenta() {
@@ -572,6 +577,30 @@ public class detalleVentaBean {
 
     public void setNombreOrazonSocialTemp(String nombreOrazonSocialTemp) {
         this.nombreOrazonSocialTemp = nombreOrazonSocialTemp;
+    }
+
+    public String getNumeroDNICliente() {
+        return numeroDNICliente;
+    }
+
+    public void setNumeroDNICliente(String numeroDNICliente) {
+        this.numeroDNICliente = numeroDNICliente;
+    }
+
+    public String getDireccionCliente() {
+        return direccionCliente;
+    }
+
+    public void setDireccionCliente(String direccionCliente) {
+        this.direccionCliente = direccionCliente;
+    }
+
+    public String getNombresCliente() {
+        return nombresCliente;
+    }
+
+    public void setNombresCliente(String nombresCliente) {
+        this.nombresCliente = nombresCliente;
     }
 
     public String getBusquedaRepuesto() {
