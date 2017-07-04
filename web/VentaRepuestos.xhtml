@@ -90,12 +90,17 @@
                                 
                                 <p:column headerText="Accion">
                                     <center>
-                                        <!-- boton de acción Reporte-->
-                                        <h:commandButton class="btn btn-primary btn-xs imgReporte" actionListener="#{detalleVentaBean.exportarPDF}"
-                                            value="">
+                                        
+                                        <h:commandButton class="btn btn-primary btn-xs imgReporte" actionListener="#{detalleVentaBean.exportarPDFBoleta}"
+                                            value=""  rendered="#{dv.comprobanteVenta.tipoComprobanteVenta.descripcion == 'Boleta'}">
                                             <f:attribute name="myattribute" value="#{dv.comprobanteVenta}" />
                                         </h:commandButton>
 
+                                        <h:commandButton class="btn btn-primary btn-xs imgReporte" actionListener="#{detalleVentaBean.exportarPDFFactura}"
+                                            value="" rendered="#{dv.comprobanteVenta.tipoComprobanteVenta.descripcion == 'Factura'}">
+                                            <f:attribute name="myattribute" value="#{dv.comprobanteVenta}" />
+                                        </h:commandButton>
+                                            
                                         <!-- boton de acción Anular-->
                                         <p:commandButton styleClass="btn btn-danger btn-xs imgAnular"
                                             value=""
