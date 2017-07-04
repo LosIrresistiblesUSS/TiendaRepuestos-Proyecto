@@ -6,7 +6,6 @@ import DAO.DetalleVentaDao;
 import DAO.DetalleVentaDaoImplement;
 import DAO.RepuestoDao;
 import DAO.RepuestoDaoImplement;
-import Helpers.Conexion;
 import Model.Cliente;
 import Model.ComprobanteVenta;
 import Model.DetalleOperacion;
@@ -115,7 +114,7 @@ public class detalleVentaBean {
         productosFiltrados = getProductos();
     }
 
-    public void exportarPDF(ActionEvent actionEvent) throws JRException, IOException{
+    public void exportarPDFBoleta(ActionEvent actionEvent) throws JRException, IOException{
         Login user = (Login) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
         this.comprobanteVenta = (ComprobanteVenta)actionEvent.getComponent().getAttributes().get("myattribute");
         
@@ -135,13 +134,13 @@ public class detalleVentaBean {
         parametros.put("numero", comprobanteVenta.getNumero());
         
         try {
-            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ComprobanteVenta.jasper"));
+            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ComprobanteVentaBoleta.jasper"));
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(),parametros, cn);
             
             
 
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            response.addHeader("Content-disposition","attachment; filename=ComprobanteVenta.pdf");
+            response.addHeader("Content-disposition","attachment; filename=ComprobanteVentaBoleta.pdf");
             ServletOutputStream stream = response.getOutputStream();
 
             JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
@@ -150,7 +149,60 @@ public class detalleVentaBean {
             stream.close();
             FacesContext.getCurrentInstance().responseComplete();
         } catch (IOException | JRException e) {
-            System.out.println("ERROOOOOOOOR: "+ e.getMessage());
+            System.out.println("ERROOOOOOOOR al exportar la Boleta: "+ e.getMessage());
+        }
+        
+    }
+    
+    public void exportarPDFFactura(ActionEvent actionEvent) throws JRException, IOException{
+        Login user = (Login) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
+        this.comprobanteVenta = (ComprobanteVenta)actionEvent.getComponent().getAttributes().get("myattribute");
+        
+        Conexion con;
+        Connection cn;
+        con = new Conexion();
+        cn = con.getConexion();
+        
+        double totalTemp2, igv2, subtotal2;
+        totalTemp2 = comprobanteVenta.getImporte();
+        totalTemp2 = Math.round(totalTemp2*100)/100.0;
+
+        igv2 = (totalTemp2 / 1.18)*0.18;
+        igv2 = Math.round(igv2*100)/100.0;
+
+        subtotal2 = totalTemp2 - igv2;
+        subtotal2 = Math.round(subtotal2*100)/100.0;
+        
+        
+        Map<String,Object> parametros= new HashMap<String,Object>();
+        parametros.put("empleado", user.getPersona().getEmpleado().getApellidos() + " ");
+        parametros.put("cliente",comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getApellidos() + comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getCliente().getRazonSocial() + " ");
+        parametros.put("direccion", comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getDireccion() + " ");
+        parametros.put("documento", comprobanteVenta.getDetalleVentaList().get(0).getDetalleOperacion().getOperacion().getPersonaCliente().getNumeroDocumento());
+        parametros.put("fecha", comprobanteVenta.getFecha());
+        parametros.put("total", comprobanteVenta.getImporte());
+        parametros.put("tipoComprobante", comprobanteVenta.getTipoComprobanteVenta().getDescripcion().toUpperCase() + " ");
+        parametros.put("numero", comprobanteVenta.getNumero());
+        parametros.put("subtotal", String.valueOf(subtotal2));
+        parametros.put("igv", String.valueOf(igv2));
+        
+        try {
+            File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ComprobanteVentaFactura.jasper"));
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(),parametros, cn);
+            
+            
+
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.addHeader("Content-disposition","attachment; filename=ComprobanteVentaFactura.pdf");
+            ServletOutputStream stream = response.getOutputStream();
+
+            JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+            stream.flush();
+            stream.close();
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (IOException | JRException e) {
+            System.out.println("ERROOOOOOOOR al exportar la Factura: "+ e.getMessage());
         }
         
     }
