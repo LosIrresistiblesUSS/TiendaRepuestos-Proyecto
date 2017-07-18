@@ -61,24 +61,35 @@
                                         <p:selectOneMenu id="cbTipoComprobante" value="#{detalleVentaBean.idTipoComprobanteVentaTemp}" class="estilos-combo">
                                             <f:selectItem itemLabel="Boleta" itemValue="1" />
                                             <f:selectItem itemLabel="Factura" itemValue="2" />
-                                            <f:ajax event="change" execute="@this" render="perfbyselection" />
+                                            <f:ajax event="change" execute="@this" render="perfbyselection, perfbyselection2" />
                                         </p:selectOneMenu>
                                     </div>
                                     <label class="control-label col-md-2" for="txtNumero">Numero:</label>
-                                    <div class="col-md-3">
-                                        <p:inputText value="#{detalleVentaBean.numeroTemp}" id="txtNumero" class="form-control" placeholder="Numero de Comprobante"/>
-                                    </div>
+                                    
+                                    <h:panelGroup id="perfbyselection2">
+                                        <div class="col-md-3">
+                                            <h:panelGroup rendered="#{detalleVentaBean.idTipoComprobanteVentaTemp eq '0'}">
+                                                <p:inputText value="#{detalleVentaBean.ultimoBoleta}" class="form-control" placeholder="Boleta" disabled="true"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{detalleVentaBean.idTipoComprobanteVentaTemp eq '1'}">
+                                                <p:inputText value="#{detalleVentaBean.ultimoBoleta}" class="form-control" placeholder="Boleta" disabled="true"/>
+                                            </h:panelGroup>
+                                            <h:panelGroup rendered="#{detalleVentaBean.idTipoComprobanteVentaTemp eq '2'}">
+                                                <p:inputText value="#{detalleVentaBean.ultimoFactura}" class="form-control" placeholder="Factura" disabled="true"/>
+                                            </h:panelGroup>
+                                        </div>
+                                    </h:panelGroup>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="control-label col-md-2" for="txtFecha">Fecha</label>
                                     <div class="col-md-3">
-                                        <input class="form-control" type="date" id="txtFecha" min="2016-01-01" max="2030-12-31" value="#{detalleVentaBean.fechaTemp}"/>
+                                        <input class="form-control" type="date" id="txtFecha" min="2016-01-01" max="2030-12-31" value="#{detalleVentaBean.fechaTemp}" disabled="true"/>
                                     </div>
-                                    <label class="control-label col-md-2" for="txtDescripcion">Descripción:</label>
+                                    <!--<label class="control-label col-md-2" for="txtDescripcion">Descripción:</label>
                                     <div class="col-md-3">
                                         <p:inputText value="#{detalleVentaBean.descripcionTemp}" id="txtDescripcion" class="form-control" placeholder="Descripción"/>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </p:fieldset>
                         </div>

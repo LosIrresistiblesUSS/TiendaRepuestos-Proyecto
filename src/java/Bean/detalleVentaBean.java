@@ -21,8 +21,10 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import Helpers.Conexion;
+import Helpers.UltimoNumero;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +89,9 @@ public class detalleVentaBean {
     String numeroTemp;
     Date fechaTemp;
     String descripcionTemp;
+    
+    String ultimoBoleta;
+    String ultimoFactura;
     
     public detalleVentaBean() {
         detalleVenta = new DetalleVenta();
@@ -419,6 +424,16 @@ public class detalleVentaBean {
         }
     }
     
+    public String ultimoNumeroBoleta(){
+        String numero = UltimoNumero.ultimoNumeroBoleta();
+        return numero;
+    }
+    
+    public String ultimoNumeroFactura(){
+        String numero = UltimoNumero.ultimoNumeroFactura();
+        return numero;
+    }
+    
     public List<DetalleVenta> getDetalleVentas() {
         DetalleVentaDao linkDAO= new DetalleVentaDaoImplement();
         detalleVentas=linkDAO.mostrarVentaConDistint(busqueda);
@@ -574,7 +589,8 @@ public class detalleVentaBean {
     }
 
     public Date getFechaTemp() {
-        return fechaTemp;
+        java.sql.Date sqlDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        return sqlDate;
     }
 
     public void setFechaTemp(Date fechaTemp) {
@@ -711,5 +727,25 @@ public class detalleVentaBean {
 
     public void setDetalleOperacionReportes(List<DetalleOperacionReporte> detalleOperacionReportes) {
         this.detalleOperacionReportes = detalleOperacionReportes;
+    }
+
+    public String getUltimoBoleta() {
+        String numero = ultimoNumeroBoleta();
+        numeroTemp = numero;
+        return numero;
+    }
+
+    public void setUltimoBoleta(String ultimoBoleta) {
+        this.ultimoBoleta = ultimoBoleta;
+    }
+
+    public String getUltimoFactura() {
+        String numero = ultimoNumeroFactura();
+        numeroTemp = numero;
+        return numero;
+    }
+
+    public void setUltimoFactura(String ultimoFactura) {
+        this.ultimoFactura = ultimoFactura;
     }
 }
