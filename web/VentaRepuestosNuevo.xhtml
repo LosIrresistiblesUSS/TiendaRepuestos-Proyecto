@@ -61,7 +61,8 @@
                                         <p:selectOneMenu id="cbTipoComprobante" value="#{detalleVentaBean.idTipoComprobanteVentaTemp}" class="estilos-combo">
                                             <f:selectItem itemLabel="Boleta" itemValue="1" />
                                             <f:selectItem itemLabel="Factura" itemValue="2" />
-                                            <f:ajax event="change" execute="@this" render="perfbyselection, perfbyselection2" />
+                                            <f:ajax event="change" execute="@this" render="perfbyselection2" />
+                                            <f:ajax event="change" execute="@this" render="perfbyselection" />
                                         </p:selectOneMenu>
                                     </div>
                                     <label class="control-label col-md-2" for="txtNumero">Numero:</label>

@@ -35,7 +35,9 @@
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav navbar-right">
                                     <li id="nav-enlace-operaciones"><a role="button" data-toggle="collapse" href="#collapseOperaciones" aria-expanded="false" aria-controls="collapseOperaciones">Operaciones</a></li>
-                                    <li id="nav-enlace-mantenimientos"><a role="button" data-toggle="collapse" href="#collapseMantenimientos" aria-expanded="false" aria-controls="collapseMantenimientos">Mantenimientos</a></li>
+                                    <ui:fragment rendered="#{loginBean.mostrarUsuarioLogeado().persona.empleado.tipoEmpleado.idTipoEmpleado==4}">
+                                        <li id="nav-enlace-mantenimientos"><a role="button" data-toggle="collapse" href="#collapseMantenimientos" aria-expanded="false" aria-controls="collapseMantenimientos">Mantenimientos</a></li>
+                                    </ui:fragment>
                                     <li id="nav-enlace-reportes"><a role="button" data-toggle="collapse" href="#collapseReportes" aria-expanded="false" aria-controls="collapseReportes">Reportes</a></li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -71,22 +73,28 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="collapse mi-collapse" id="collapseMantenimientos">
-                        <div class="container btn-group1">
-                            <h4 class="text-collapse">Mantenimientos</h4>
-                            <div class="btn-group btn-group-sm " role="group" aria-label="">
-                                <a href="#" class="btn btn-primary">Empleado</a>
-                                <a href="#" class="btn btn-primary">Proveedor</a>
-                                <a href="#" class="btn btn-primary">Cliente</a>
-                                <a href="Repuesto.xhtml" class="btn btn-primary">Repuesto</a>
-                                <a href="TipoEmpleado.xhtml" class="btn btn-primary">Tipo Empleado</a>
-                                <a href="TipoServicio.xhtml" class="btn btn-primary">Tipo Servicio</a>                
-                                <a href="TipoDocumento.xhtml" class="btn btn-primary">Tipo Documento</a>
-                                <a href="TipoCliente.xhtml" class="btn btn-primary">Tipo Cliente</a>
+                    <ui:fragment rendered="#{loginBean.mostrarUsuarioLogeado().persona.empleado.tipoEmpleado.idTipoEmpleado==4}">
+                        <div class="collapse mi-collapse" id="collapseMantenimientos">
+                            <div class="container btn-group1">
+                                <h4 class="text-collapse">Mantenimientos</h4>
+                                <div class="btn-group btn-group-sm " role="group" aria-label="">
+                                    <!--<a href="#" class="btn btn-primary">Empleado</a>
+                                    <a href="#" class="btn btn-primary">Proveedor</a>
+                                    <a href="#" class="btn btn-primary">Cliente</a>-->
+                                    <a href="Repuesto.xhtml" class="btn btn-primary">Repuesto</a>
+
+
+
+                                    <a href="TipoEmpleado.xhtml" class="btn btn-primary">Tipo Empleado</a>
+                                    <a href="TipoServicio.xhtml" class="btn btn-primary">Tipo Servicio</a>                
+                                    <a href="TipoDocumento.xhtml" class="btn btn-primary">Tipo Documento</a>
+                                    <a href="TipoCliente.xhtml" class="btn btn-primary">Tipo Cliente</a>
+
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </ui:fragment>
 
                     <div class="collapse mi-collapse" id="collapseReportes">
                         <div class="container btn-group1">
