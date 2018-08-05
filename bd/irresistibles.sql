@@ -396,8 +396,8 @@ INSERT INTO `empleado` (`idPersona`, `apellidos`, `idTipoEmpleado`) VALUES
 (17, 'Otero Arrascue', 2),
 (23, 'Santisteban Ayasta', 3),
 (28, 'Zeña Zeña', 2),
-(32, 'Chinguel Rodriguez', 4),
-(36, 'Acuña Cotrina', 1),
+(32, 'Chinguel Rodriguez', 1),
+(36, 'Acuña Cotrina', 4),
 (38, 'Mejia Cabrera', 6);
 
 -- --------------------------------------------------------
@@ -491,13 +491,13 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`idLogin`, `idPersona`, `usuario`, `pass`, `imagen`) VALUES
-(1, 6, 'cantosmo', '7627cf322c11bdfb56c77206118f01cc', 'cantosmo.jpg'),
-(2, 17, 'oarrascuedannyf', '76f6779c4cb31dbffdd5fe3b3a73c4df', 'oarrascuedannyf.jpg'),
-(3, 23, 'sayastaleona', '717612314c973592d58e447cdd3e8bc2', 'sayastaleona.jpg'),
-(4, 28, 'zzenaedins', 'c33ebbf3bc4d4008822f7267d07732a6', 'zzenaedins.jpg'),
-(5, 32, 'crodriguezmilag', 'e63bd05bb93ac5000814ce53231c619e', 'crodriguezmilag.jpg'),
-(6, 36, 'acotrinae', '42ffc07c053b92629cf3db3d203498d9', 'acotrinae.jpg'),
-(7, 38, 'hmejiac', '1ff9bafb2e28464215d132ffb8a0bd47', 'ingmejia.jpg');
+(1, 6, 'cantosmo', 'e10adc3949ba59abbe56e057f20f883e', 'cantosmo.jpg'),
+(2, 17, 'oarrascuedannyf', 'e10adc3949ba59abbe56e057f20f883e', 'oarrascuedannyf.jpg'),
+(3, 23, 'sayastaleona', 'e10adc3949ba59abbe56e057f20f883e', 'sayastaleona.jpg'),
+(4, 28, 'zzenaedins', 'e10adc3949ba59abbe56e057f20f883e', 'zzenaedins.jpg'),
+(5, 32, 'crodriguezmilag', 'e10adc3949ba59abbe56e057f20f883e', 'crodriguezmilag.jpg'),
+(6, 36, 'acotrinae', 'e10adc3949ba59abbe56e057f20f883e', 'acotrinae.jpg'),
+(7, 38, 'hmejiac', 'e10adc3949ba59abbe56e057f20f883e', 'ingmejia.jpg');
 
 -- --------------------------------------------------------
 
